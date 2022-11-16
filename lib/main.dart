@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:razer/application/auth/auth_bloc.dart';
+import 'package:razer/application/shop/shop_bloc.dart';
 import 'package:razer/presentation/auth/auth_page.dart';
 
 Future main() async {
@@ -22,6 +23,9 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider<AuthBloc>(
           create: (BuildContext context) => AuthBloc(),
+        ),
+        BlocProvider<ShopBloc>(
+          create: (BuildContext context) => ShopBloc(),
         ),
       ],
       child: MaterialApp(

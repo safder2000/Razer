@@ -1,28 +1,32 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:razer/core/colors.dart';
 import 'package:razer/core/constents.dart';
+import 'package:razer/functions/product_functions.dart';
+import 'package:razer/model/product_model.dart';
 import 'package:razer/presentation/cart/screen_cart.dart';
 import 'package:razer/presentation/shop/screen_buy_item.dart';
 import 'package:razer/presentation/shop/widgets/shop_item_widget.dart';
 import 'package:razer/presentation/widgets/appbar_widget.dart';
 
 class ScreenShop extends StatelessWidget {
-  const ScreenShop({super.key});
-
+  ScreenShop({super.key, required this.catogory});
+  String catogory;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Laptops',
+          catogory,
           style: TextStyle(color: justgreen),
         ),
         actions: [
           IconButton(
               onPressed: () {},
-              icon: Icon(
+              icon: const Icon(
                 Icons.search,
                 size: 27,
               )),
@@ -31,44 +35,48 @@ class ScreenShop extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute<void>(
-                    builder: (BuildContext context) => ScreenCart(),
+                    builder: (BuildContext context) => const ScreenCart(),
                   ),
                 );
               },
-              icon: Icon(
+              icon: const Icon(
                 Icons.shopping_cart_outlined,
                 size: 27,
               ))
         ],
         backgroundColor: Colors.black,
       ),
-      body: GridView.count(
+      body: StreamBuilder<List<Product>>(
+          stream: ProductFn.readProducts(catogory: catogory),
+          builder: (context, snapshot) {
+            if (snapshot.hasError) {
+              return Center(
+                  child: Text(
+                'somthing went wrong ${snapshot.error}',
+                style: TextStyle(color: Colors.white),
+              ));
+            } else if (snapshot.hasData) {
+              final product = snapshot.data;
+              return itemGrid(context, product!);
+            } else {
+              return Center(child: CircularProgressIndicator());
+            }
+          }),
+    );
+  }
+
+  GridView itemGrid(BuildContext context, List<Product> product) {
+    return GridView.builder(
+      itemCount: product.length,
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
         childAspectRatio: 8 / 10,
-        children: [
-          GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute<void>(
-                    builder: (BuildContext context) => ScreenBuyItem(),
-                  ),
-                );
-              },
-              child: ShopItemWidget()),
-          ShopItemWidget(
-            isOffer: true,
-          ),
-          ShopItemWidget(
-            isUnavailable: true,
-          ),
-          ShopItemWidget(),
-          ShopItemWidget(),
-          ShopItemWidget(),
-          ShopItemWidget(),
-          ShopItemWidget(),
-        ],
       ),
+      itemBuilder: (BuildContext context, int index) {
+        return ShopItemWidget(
+          product: product[index],
+        );
+      },
     );
   }
 }

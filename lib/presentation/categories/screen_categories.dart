@@ -26,7 +26,9 @@ class ScreenCategories extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute<void>(
-                      builder: (BuildContext context) => ScreenShop(),
+                      builder: (BuildContext context) => ScreenShop(
+                        catogory: 'laptops',
+                      ),
                     ),
                   );
                 },
