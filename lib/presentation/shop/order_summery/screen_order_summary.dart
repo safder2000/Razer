@@ -6,8 +6,6 @@ import 'package:razer/core/constents.dart';
 import 'package:razer/presentation/shop/order_summery/widgets/items.dart';
 import 'package:razer/presentation/shop/order_summery/widgets/price_details.dart';
 import 'package:razer/presentation/shop/payment/screen_payment.dart';
-import 'package:razer/presentation/widgets/appbar_widget.dart';
-
 import 'widgets/deliver_to.dart';
 
 class ScreenOederSummery extends StatelessWidget {

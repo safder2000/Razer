@@ -1,4 +1,6 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:razer/core/colors.dart';
 
 final height_20 = const SizedBox(
   height: 20,
@@ -22,3 +24,9 @@ final style_16 = TextStyle(fontSize: 16);
 final titleStyle_16 = TextStyle(fontSize: 16, fontWeight: FontWeight.bold);
 final titleStyle_17 = TextStyle(fontSize: 17, fontWeight: FontWeight.bold);
 final titleStyle_15 = TextStyle(fontSize: 15);
+final greenDiv = Divider(
+  color: razergreen,
+);
+final grayDiv = Divider(
+  color: Colors.white60,
+);

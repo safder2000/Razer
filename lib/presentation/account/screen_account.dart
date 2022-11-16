@@ -1,9 +1,16 @@
+import 'dart:developer';
+
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:razer/core/colors.dart';
 
 import 'package:razer/core/constents.dart';
 import 'package:razer/presentation/account/Orders/screen_orders.dart';
 import 'package:razer/presentation/account/account_settings/edit_profille/screen_edit_profle.dart';
+import 'package:razer/presentation/account/account_settings/notification_settings/screen_notifications.dart';
 import 'package:razer/presentation/account/account_settings/save_card_n_wallet/cardsNwallet.dart';
+import 'package:razer/presentation/account/account_settings/saved_address/screen_saved_address.dart';
 import 'package:razer/presentation/account/widgets/account_boxes_widget.dart';
 import 'package:razer/presentation/account/widgets/account_settings_widgets.dart';
 import 'package:razer/presentation/account/wishlist/screen_wishlist.dart';
@@ -14,11 +21,31 @@ class ScreenAccount extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final email = FirebaseAuth.instance.currentUser!.email;
+    log('${email}');
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        title: Text(
+          'My Account',
+          style: TextStyle(
+              color: Colors.green, fontSize: 18, fontWeight: FontWeight.bold),
+        ),
+        actions: [
+          IconButton(
+              onPressed: () {
+                confirmLogout(context);
+              },
+              icon: Icon(Icons.logout_outlined)),
+        ],
+      ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          AppBarWidget(title: 'My Account'),
+          Divider(
+            color: razergreen,
+            height: 1,
+          ),
           height_10,
           height_10,
           Row(
@@ -54,7 +81,7 @@ class ScreenAccount extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute<void>(
-                      builder: (BuildContext context) => ScreenOrders(),
+                      builder: (BuildContext context) => const ScreenOrders(),
                     ),
                   );
                 },
@@ -67,7 +94,7 @@ class ScreenAccount extends StatelessWidget {
                 onTap: () => Navigator.push(
                   context,
                   MaterialPageRoute<void>(
-                    builder: (BuildContext context) => ScreenWishlist(),
+                    builder: (BuildContext context) => const ScreenWishlist(),
                   ),
                 ),
                 child: AccountBoxesWidget(
@@ -75,18 +102,18 @@ class ScreenAccount extends StatelessWidget {
                   title: 'Wishlist',
                 ),
               ),
-              AccountBoxesWidget(
-                ico: Icons.card_giftcard,
-                title: 'Coupons',
-              ),
-              AccountBoxesWidget(
-                ico: Icons.headphones_outlined,
-                title: 'Help Center',
-              ),
+              // AccountBoxesWidget(
+              //   ico: Icons.card_giftcard,
+              //   title: 'Coupons',
+              // ),
+              // AccountBoxesWidget(
+              //   ico: Icons.headphones_outlined,
+              //   title: 'Help Center',
+              // ),
             ],
           ),
           height_10,
-          Divider(
+          const Divider(
             color: Colors.white10,
             thickness: 8,
           ),
@@ -111,7 +138,7 @@ class ScreenAccount extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute<void>(
-                        builder: (BuildContext context) => EditProfile(),
+                        builder: (BuildContext context) => const EditProfile(),
                       ),
                     );
                   },
@@ -125,7 +152,7 @@ class ScreenAccount extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute<void>(
-                        builder: (BuildContext context) => CardsNWallet(),
+                        builder: (BuildContext context) => const CardsNWallet(),
                       ),
                     );
                   },
@@ -134,23 +161,159 @@ class ScreenAccount extends StatelessWidget {
                     title: 'Saved Cards & Wallet',
                   ),
                 ),
-                AccountSettingsWidgets(
-                  ico: Icons.location_on_outlined,
-                  title: 'Saved Adresses',
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute<void>(
+                        builder: (BuildContext context) =>
+                            const ScreenSavedAddress(),
+                      ),
+                    );
+                  },
+                  child: AccountSettingsWidgets(
+                    ico: Icons.location_on_outlined,
+                    title: 'Saved Adresses',
+                  ),
                 ),
-                AccountSettingsWidgets(
-                  ico: Icons.language_outlined,
-                  title: 'Select Language',
+                GestureDetector(
+                  onTap: () {
+                    selectLanguage(context);
+                  },
+                  child: AccountSettingsWidgets(
+                    ico: Icons.language_outlined,
+                    title: 'Select Language',
+                  ),
                 ),
-                AccountSettingsWidgets(
-                  ico: Icons.notifications_active_outlined,
-                  title: 'Notification Settings',
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute<void>(
+                        builder: (BuildContext context) =>
+                            const NotificationSettings(),
+                      ),
+                    );
+                  },
+                  child: AccountSettingsWidgets(
+                    ico: Icons.notifications_active_outlined,
+                    title: 'Notification Settings',
+                  ),
                 ),
               ],
             ),
           ),
         ],
       ),
+    );
+  }
+
+  selectLanguage(BuildContext context) {
+    // set up the buttons
+    Widget cancelButton = TextButton(
+      child: const Text("Cancel"),
+      onPressed: () {
+        Navigator.pop(context);
+      },
+    );
+    Widget continueButton = TextButton(
+      child: const Text("Save"),
+      onPressed: () {
+        Navigator.pop(context);
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog languageSelect = AlertDialog(
+      backgroundColor: Colors.black,
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          languageTile(lang: 'English', isSelected: true),
+          height_10,
+          languageTile(lang: 'Malayalam'),
+          height_10,
+          languageTile(lang: 'Hindi'),
+        ],
+      ),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return languageSelect;
+      },
+    );
+  }
+
+  Row languageTile({required String lang, bool isSelected = false}) {
+    return Row(
+      children: [
+        Icon(
+          isSelected ? Icons.circle : Icons.circle_outlined,
+          size: 18,
+          color: Colors.white,
+        ),
+        width_10,
+        Text(
+          lang,
+          style: TextStyle(fontSize: 16, color: Colors.white),
+        ),
+      ],
+    );
+  }
+
+  confirmLogout(BuildContext context) {
+    // set up the buttons
+
+    Widget cancelButton = TextButton(
+      child: Text(
+        "Cancel",
+        style: TextStyle(
+            color: razergreen, fontSize: 16, fontWeight: FontWeight.bold),
+      ),
+      onPressed: () {
+        Navigator.pop(context);
+      },
+    );
+    Widget continueButton = TextButton(
+      child: Text(
+        "Logout",
+        style: TextStyle(
+            color: razergreen, fontSize: 16, fontWeight: FontWeight.bold),
+      ),
+      onPressed: () {
+        Navigator.pop(context);
+        FirebaseAuth.instance.signOut();
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog logoutConfirm = AlertDialog(
+      elevation: 100,
+      backgroundColor: Colors.black,
+      title: Text(
+        "Are you sure want to logout ?",
+        style: TextStyle(color: Colors.white),
+      ),
+      // content: Text("Are you sure want to logout?"),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return logoutConfirm;
+      },
     );
   }
 }

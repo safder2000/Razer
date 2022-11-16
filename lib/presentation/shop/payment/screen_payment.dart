@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:razer/core/colors.dart';
 import 'package:razer/core/constents.dart';
+import 'package:razer/presentation/shop/payment/track_order.dart';
 
 class ScreenPayment extends StatelessWidget {
   const ScreenPayment({super.key});
@@ -90,18 +89,26 @@ class ScreenPayment extends StatelessWidget {
                       ),
                     );
                   },
-                  child: Container(
-                    height: 50,
-                    decoration: BoxDecoration(
-                        color: theAmber,
-                        borderRadius: BorderRadius.circular(8)),
-                    child: const Center(
-                      child: Text(
-                        ' Pay ',
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold),
+                  child: GestureDetector(
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute<void>(
+                        builder: (BuildContext context) => TrackOrder(),
+                      ),
+                    ),
+                    child: Container(
+                      height: 50,
+                      decoration: BoxDecoration(
+                          color: theAmber,
+                          borderRadius: BorderRadius.circular(8)),
+                      child: const Center(
+                        child: Text(
+                          ' Pay ',
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold),
+                        ),
                       ),
                     ),
                   ),

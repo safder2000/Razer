@@ -7,6 +7,7 @@ class AppBarWidget extends StatelessWidget {
     this.imgPath,
     this.isSearch = false,
     this.count,
+    this.actions = const SizedBox(),
     Key? key,
   }) : super(key: key);
   String title;
@@ -16,6 +17,7 @@ class AppBarWidget extends StatelessWidget {
   bool isImg = false;
   bool isSearch;
   bool isCount = false;
+  Widget actions;
 
   @override
   Widget build(BuildContext context) {

@@ -3,6 +3,7 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:razer/core/colors.dart';
 import 'package:razer/core/constents.dart';
+import 'package:razer/presentation/cart/screen_cart.dart';
 import 'package:razer/presentation/shop/screen_buy_item.dart';
 import 'package:razer/presentation/shop/widgets/shop_item_widget.dart';
 import 'package:razer/presentation/widgets/appbar_widget.dart';
@@ -26,7 +27,14 @@ class ScreenShop extends StatelessWidget {
                 size: 27,
               )),
           IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute<void>(
+                    builder: (BuildContext context) => ScreenCart(),
+                  ),
+                );
+              },
               icon: Icon(
                 Icons.shopping_cart_outlined,
                 size: 27,
@@ -48,8 +56,12 @@ class ScreenShop extends StatelessWidget {
                 );
               },
               child: ShopItemWidget()),
-          ShopItemWidget(),
-          ShopItemWidget(),
+          ShopItemWidget(
+            isOffer: true,
+          ),
+          ShopItemWidget(
+            isUnavailable: true,
+          ),
           ShopItemWidget(),
           ShopItemWidget(),
           ShopItemWidget(),

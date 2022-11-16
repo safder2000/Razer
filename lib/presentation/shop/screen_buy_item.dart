@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
+
 import 'package:razer/core/colors.dart';
 import 'package:razer/core/constents.dart';
+import 'package:razer/presentation/cart/screen_cart.dart';
 import 'package:razer/presentation/shop/order_summery/screen_order_summary.dart';
 
 class ScreenBuyItem extends StatelessWidget {
@@ -20,7 +20,14 @@ class ScreenBuyItem extends StatelessWidget {
                 size: 27,
               )),
           IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute<void>(
+                    builder: (BuildContext context) => ScreenCart(),
+                  ),
+                );
+              },
               icon: Icon(
                 Icons.shopping_cart_outlined,
                 size: 27,
