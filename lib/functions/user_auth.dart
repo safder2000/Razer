@@ -66,8 +66,7 @@ class UserAuth {
     final docUser = FirebaseFirestore.instance.collection('users').doc(email);
     List<String> cart = [];
     Map<String, dynamic> map = {
-      'id': email,
-      'cart': cart,
+      'email': email,
     };
     await docUser.set(map);
     log('new user created n added to databse');

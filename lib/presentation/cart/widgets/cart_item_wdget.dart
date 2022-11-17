@@ -74,9 +74,9 @@ class CartItemWidget extends StatelessWidget {
                     border: Border.all(color: razergreen),
                     borderRadius: BorderRadius.circular(5),
                   ),
-                  child: Row(children: [
-                    const Text('  Qty: 1'),
-                    const Icon(
+                  child: Row(children: const [
+                    Text('  Qty: 1'),
+                    Icon(
                       Icons.arrow_drop_down,
                       color: razergreen,
                     )
@@ -86,7 +86,7 @@ class CartItemWidget extends StatelessWidget {
               const Spacer(),
               RatingBarIndicator(
                 rating: product.rating.toDouble(),
-                itemBuilder: (context, index) => Icon(
+                itemBuilder: (context, index) => const Icon(
                   Icons.star,
                   color: Colors.amber,
                 ),

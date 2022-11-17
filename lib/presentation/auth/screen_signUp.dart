@@ -42,28 +42,28 @@ class SignUpWidget extends StatelessWidget {
                   height_20,
                   height_20,
                   height_20,
-                  // const CircleAvatar(
-                  //   radius: 90,
-                  //   backgroundColor: razergreen,
-                  //   child: CircleAvatar(
-                  //     radius: 89,
-                  //     child: CircleAvatar(
-                  //       radius: 88,
-                  //       backgroundImage: NetworkImage(
-                  //           'https://i.pinimg.com/564x/31/ea/9a/31ea9a0324756719da71f39be82f22bf.jpg'),
-                  //     ),
-                  //   ),
-                  // ),
-                  // height_10,
-                  // Row(
-                  //   mainAxisAlignment: MainAxisAlignment.center,
-                  //   children: const [
-                  //     Text(
-                  //       'Makima',
-                  //       style: TextStyle(fontSize: 23),
-                  //     ),
-                  //   ],
-                  // ),
+                  const CircleAvatar(
+                    radius: 90,
+                    backgroundColor: razergreen,
+                    child: CircleAvatar(
+                      radius: 89,
+                      child: CircleAvatar(
+                        radius: 88,
+                        backgroundImage: NetworkImage(
+                            'https://w1.pngwing.com/pngs/743/500/png-transparent-circle-silhouette-logo-user-user-profile-green-facial-expression-nose-cartoon.png'),
+                      ),
+                    ),
+                  ),
+                  height_20,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Text(
+                        'Welcome',
+                        style: TextStyle(fontSize: 23, color: Colors.white70),
+                      ),
+                    ],
+                  ),
                   height_20,
                   height_20,
                   Row(
@@ -129,38 +129,38 @@ class SignUpWidget extends StatelessWidget {
                     ],
                   ),
                   height_20,
-                  // Row(
-                  //   mainAxisAlignment: MainAxisAlignment.center,
-                  //   children: [
-                  //     SizedBox(
-                  //       width: 300,
-                  //       child: TextFormField(
-                  //         controller: password2,
-                  //         textAlign: TextAlign.center,
-                  //         obscureText: true,
-                  //         style: const TextStyle(
-                  //             color: Colors.white, fontSize: 16),
-                  //         autovalidateMode: AutovalidateMode.onUserInteraction,
-                  //         validator: (value) => value != null &&
-                  //                 value.length <= 8 &&
-                  //                 password.text != password2.text
-                  //             ? 'password didnt match'
-                  //             : null,
-                  //         decoration: const InputDecoration(
-                  //             focusedBorder: OutlineInputBorder(
-                  //               borderSide:
-                  //                   BorderSide(color: razergreen, width: 1.0),
-                  //             ),
-                  //             enabledBorder: OutlineInputBorder(
-                  //               borderSide:
-                  //                   BorderSide(color: justgreen, width: 1.0),
-                  //             ),
-                  //             hintText: 'Confirm password',
-                  //             hintStyle: TextStyle(color: Colors.white70)),
-                  //       ),
-                  //     ),
-                  //   ],
-                  // ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: 300,
+                        child: TextFormField(
+                          controller: password2,
+                          textAlign: TextAlign.center,
+                          obscureText: true,
+                          style: const TextStyle(
+                              color: Colors.white, fontSize: 16),
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          validator: (value) => value != null &&
+                                  value.length <= 6 &&
+                                  password.text != password2.text
+                              ? 'password didnt match'
+                              : null,
+                          decoration: const InputDecoration(
+                              focusedBorder: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: razergreen, width: 1.0),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: justgreen, width: 1.0),
+                              ),
+                              hintText: 'Confirm password',
+                              hintStyle: TextStyle(color: Colors.white70)),
+                        ),
+                      ),
+                    ],
+                  ),
                   height_10,
                   height_20,
                   Row(

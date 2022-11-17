@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:razer/core/colors.dart';
 import 'package:razer/core/constents.dart';
 
-class EditProfile extends StatelessWidget {
-  const EditProfile({super.key});
+import '../../../../application/EditProfile/edit_profile_bloc.dart';
 
+class EditProfile extends StatelessWidget {
+  EditProfile({super.key});
+  final name_controller = TextEditingController();
+  final number_controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,84 +20,90 @@ class EditProfile extends StatelessWidget {
           style: TextStyle(color: justgreen),
         ),
       ),
-      body: ListView(children: [
-        height_20,
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Stack(
-              children: const [
-                CircleAvatar(
-                  radius: 71,
-                  backgroundColor: Colors.white60,
-                  child: CircleAvatar(
-                    radius: 70,
-                    backgroundImage: NetworkImage(
-                      'https://staticg.sportskeeda.com/editor/2022/10/77c8d-16660870279554-1920.jpg',
+      body: BlocBuilder<EditProfileBloc, EditProfileState>(
+        builder: (context, state) {
+          return ListView(children: [
+            height_20,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Stack(
+                  children: [
+                    CircleAvatar(
+                      radius: 71,
+                      backgroundColor: Colors.white60,
+                      child: CircleAvatar(
+                        radius: 70,
+                        backgroundImage: NetworkImage(
+                          state.profile.profilePic,
+                        ),
+                      ),
                     ),
-                  ),
+                    Positioned(
+                      bottom: 0,
+                      right: 0,
+                      child: CircleAvatar(
+                        radius: 20,
+                        child: Icon(Icons.edit),
+                      ),
+                    )
+                  ],
                 ),
-                Positioned(
-                  bottom: 0,
-                  right: 0,
-                  child: CircleAvatar(
-                    radius: 20,
-                    child: Icon(Icons.edit),
-                  ),
-                )
               ],
             ),
-          ],
-        ),
-        height_20,
-        height_20,
-        textfield('First Name'),
-        height_20,
-        textfield('Last Name'),
-        height_20,
-        textfield('Mobile Number'),
-        height_20,
-        textfield('Email ID'),
-        height_20,
-        height_20,
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ElevatedButton(
-              onPressed: () {},
-              style: ElevatedButton.styleFrom(
-                  elevation: 0,
-                  textStyle: const TextStyle(fontSize: 20),
-                  backgroundColor: Colors.white24),
-              child: const Text('  Save  '),
-            ),
-          ],
-        )
-      ]),
+            height_20,
+            height_20,
+            textfield('Name', name_controller),
+            height_20,
+            textfield('Mobile Number', number_controller),
+            height_20,
+            height_20,
+            height_20,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    BlocProvider.of<EditProfileBloc>(context).add(
+                      SaveProfie(name: name_controller.text.trim(), number: []),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                      elevation: 0,
+                      textStyle: const TextStyle(fontSize: 20),
+                      backgroundColor: Colors.white24),
+                  child: const Text('  Save  '),
+                ),
+              ],
+            )
+          ]);
+        },
+      ),
     );
   }
 
-  Row textfield(String hint) {
+  Row textfield(String hint, TextEditingController controller) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         SizedBox(
-          width: 400,
-          child: TextField(
-            textAlign: TextAlign.start,
+          width: 350,
+          child: TextFormField(
+            controller: controller,
+            textAlign: TextAlign.center,
+            obscureText: true,
             style: const TextStyle(color: Colors.white, fontSize: 16),
+            // autovalidateMode: AutovalidateMode.onUserInteraction,
+            // validator: (value) =>
+            //     value != null && value.length <= 3 ? 'min 3 char' : null,
             decoration: InputDecoration(
-                // errorText: _validate ? 'wrong password' : null,
                 focusedBorder: const OutlineInputBorder(
                   borderSide: BorderSide(color: razergreen, width: 1.0),
                 ),
                 enabledBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.white60, width: 1.0),
+                  borderSide: BorderSide(color: Colors.white70, width: 1.0),
                 ),
-                label: Text(
-                  hint,
-                  style: const TextStyle(color: Colors.white70),
-                ),
+                hintText: hint,
                 hintStyle: const TextStyle(color: Colors.white70)),
           ),
         ),

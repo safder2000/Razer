@@ -25,5 +25,15 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       // TODO: implement event handler
       emit(state);
     });
+    // on<IncrementCount>((event, emit) {
+    //   // TODO: implement event handler
+    //   emit(CartState(products: state.products, count: state.count + 1));
+    // });
+    // on<IncrementCount>((event, emit) {
+    //   // TODO: implement event handler
+    //   emit(CartState(
+    //       products: state.products,
+    //       count: state.count <= 0 ? state.count : state.count - 1));
+    // });
   }
 }

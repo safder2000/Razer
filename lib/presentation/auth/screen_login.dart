@@ -1,19 +1,11 @@
-import 'dart:developer';
-
-import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/gestures.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:razer/application/auth/auth_bloc.dart';
 import 'package:razer/core/colors.dart';
 import 'package:razer/core/constents.dart';
 import 'package:razer/presentation/auth/screen_forgot_password.dart';
-import 'package:razer/presentation/main__page/main_page.dart';
-import 'package:razer/presentation/auth/auth_page.dart';
-import 'package:razer/presentation/auth/screen_signUp.dart';
-import 'package:razer/presentation/auth/widgets/buttons.dart';
-import 'package:razer/presentation/utils/utils.dart';
 
 class LoginWidget extends StatelessWidget {
   final navigatorKey = GlobalKey<NavigatorState>();
@@ -31,6 +23,8 @@ class LoginWidget extends StatelessWidget {
   @override
   @override
   Widget build(BuildContext context) {
+    final lastLogin =
+        FirebaseAuth.instance.currentUser?.email ?? 'Good to see u again';
     return Scaffold(
       body: SafeArea(
         child: Form(
@@ -55,12 +49,13 @@ class LoginWidget extends StatelessWidget {
                 ),
               ),
               height_10,
+              height_20,
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
+                children: [
                   Text(
-                    'Makima',
-                    style: TextStyle(fontSize: 23),
+                    lastLogin,
+                    style: TextStyle(fontSize: 23, color: Colors.white70),
                   ),
                 ],
               ),

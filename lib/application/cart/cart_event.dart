@@ -20,3 +20,7 @@ class RemoveFromCart extends CartEvent {
   Product product;
   final context;
 }
+
+class IncrementCount extends CartEvent {}
+
+class DecrementCount extends CartEvent {}

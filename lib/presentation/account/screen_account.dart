@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:razer/core/colors.dart';
 
 import 'package:razer/core/constents.dart';
+import 'package:razer/model/user_profile_model.dart';
 import 'package:razer/presentation/account/Orders/screen_orders.dart';
 import 'package:razer/presentation/account/account_settings/edit_profille/screen_edit_profle.dart';
 import 'package:razer/presentation/account/account_settings/notification_settings/screen_notifications.dart';
@@ -48,27 +49,58 @@ class ScreenAccount extends StatelessWidget {
           ),
           height_10,
           height_10,
-          Row(
-            children: [
-              width_10,
-              const CircleAvatar(
-                radius: 51,
-                backgroundColor: Colors.white60,
-                child: CircleAvatar(
-                  radius: 50,
-                  backgroundImage: NetworkImage(
-                    'https://staticg.sportskeeda.com/editor/2022/10/77c8d-16660870279554-1920.jpg',
-                  ),
-                ),
-              ),
-              width_10,
-              width_10,
-              const Text(
-                'Makima',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              )
-            ],
-          ),
+          StreamBuilder<List<UserProfile>>(
+              stream: null,
+              builder: (context, snapshot) {
+                if (snapshot.hasError) {
+                  return Center(
+                      child: Column(
+                    children: [
+                      const Text(
+                        'somthing went wrong ',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      Text(
+                        '${snapshot.error}',
+                        style: const TextStyle(color: Colors.white),
+                      ),
+                    ],
+                  ));
+                } else if (snapshot.hasData) {
+                  final user = snapshot.data;
+                  if (user == null || user.isEmpty) {
+                    return noDataFound();
+                  } else if (user.isNotEmpty) {
+                    return Row(
+                      children: [
+                        width_10,
+                        CircleAvatar(
+                          radius: 51,
+                          backgroundColor: Colors.white60,
+                          child: CircleAvatar(
+                            radius: 50,
+                            backgroundImage: NetworkImage(
+                              "${user[0].profilePic}",
+                            ),
+                          ),
+                        ),
+                        width_10,
+                        width_10,
+                        Text(
+                          user[0].name,
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                        )
+                      ],
+                    );
+                    ;
+                  } else {
+                    return noDataFound();
+                  }
+                } else {
+                  return noDataFound();
+                }
+              }),
           height_10,
           height_10,
           GridView.count(
@@ -138,7 +170,7 @@ class ScreenAccount extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute<void>(
-                        builder: (BuildContext context) => const EditProfile(),
+                        builder: (BuildContext context) => EditProfile(),
                       ),
                     );
                   },
@@ -205,6 +237,30 @@ class ScreenAccount extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+
+  Row noDataFound() {
+    return Row(
+      children: [
+        width_10,
+        CircleAvatar(
+          radius: 51,
+          backgroundColor: Colors.white60,
+          child: CircleAvatar(
+            radius: 50,
+            backgroundImage: NetworkImage(
+              "https://w1.pngwing.com/pngs/743/500/png-transparent-circle-silhouette-logo-user-user-profile-green-facial-expression-nose-cartoon.png",
+            ),
+          ),
+        ),
+        width_10,
+        width_10,
+        Text(
+          'User name',
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        )
+      ],
     );
   }
 

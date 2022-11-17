@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:razer/application/EditProfile/edit_profile_bloc.dart';
 import 'package:razer/application/auth/auth_bloc.dart';
 import 'package:razer/application/cart/cart_bloc.dart';
 import 'package:razer/application/shop/shop_bloc.dart';
@@ -30,6 +31,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<CartBloc>(
           create: (BuildContext context) => CartBloc(),
+        ),
+        BlocProvider<EditProfileBloc>(
+          create: (BuildContext context) => EditProfileBloc(),
         ),
       ],
       child: MaterialApp(
