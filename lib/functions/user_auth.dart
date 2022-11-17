@@ -52,7 +52,7 @@ class UserAuth {
       // user.credential;
     } on FirebaseAuthException catch (e) {
       print(">>>>>>>> Exception caught $e");
-      Utils.showSnackBar(text: e.message);
+      Utils.showSnackBar(text: e.message, context: context);
     }
     // navigatorKey.currentState!.pop((route) => route);
 

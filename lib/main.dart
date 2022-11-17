@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:razer/application/auth/auth_bloc.dart';
+import 'package:razer/application/cart/cart_bloc.dart';
 import 'package:razer/application/shop/shop_bloc.dart';
 import 'package:razer/presentation/auth/auth_page.dart';
 
@@ -26,6 +27,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<ShopBloc>(
           create: (BuildContext context) => ShopBloc(),
+        ),
+        BlocProvider<CartBloc>(
+          create: (BuildContext context) => CartBloc(),
         ),
       ],
       child: MaterialApp(

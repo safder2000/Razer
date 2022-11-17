@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:razer/core/colors.dart';
 import 'package:razer/core/constents.dart';
+import 'package:razer/model/product_model.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+
+import '../../../application/cart/cart_bloc.dart';
 
 class CartItemWidget extends StatelessWidget {
-  const CartItemWidget({
+  CartItemWidget({
+    required this.product,
     Key? key,
   }) : super(key: key);
-
+  Product product;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -25,8 +31,8 @@ class CartItemWidget extends StatelessWidget {
                     height: 90,
                     width: 90,
                     decoration: BoxDecoration(
-                      image: const DecorationImage(
-                          image: AssetImage('lib/assets/catogory_console.png')),
+                      image: DecorationImage(
+                          image: NetworkImage(product.images[0])),
                       borderRadius: BorderRadius.circular(5),
                       color: Colors.black87,
                     ),
@@ -38,16 +44,16 @@ class CartItemWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   height_10,
-                  const SizedBox(
+                  SizedBox(
                     width: 290,
                     child: Text(
-                      'Charging Stand for Xbox Razer Limited Edition...',
+                      product.name,
                       style: TextStyle(fontSize: 16),
                       overflow: TextOverflow.clip,
                     ),
                   ),
-                  const Text(
-                    '\$ 199',
+                  Text(
+                    '\$ ${product.price}',
                     style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
                   )
                 ],
@@ -78,9 +84,15 @@ class CartItemWidget extends StatelessWidget {
                 ),
               ),
               const Spacer(),
-              const Text(
-                'Devilvery by Sun Nov 6',
-                style: TextStyle(color: Colors.white70, fontSize: 13),
+              RatingBarIndicator(
+                rating: 2.75,
+                itemBuilder: (context, index) => Icon(
+                  Icons.star,
+                  color: Colors.amber,
+                ),
+                itemCount: 5,
+                itemSize: 30.0,
+                direction: Axis.horizontal,
               ),
               width_10,
               width_10,
@@ -89,11 +101,14 @@ class CartItemWidget extends StatelessWidget {
           const Spacer(),
           Row(
             children: [
-              CustomButton(
-                text: 'Save for later',
-              ),
-              CustomButton(
-                text: 'Remove',
+              Expanded(
+                child: InkWell(
+                  onTap: () => BlocProvider.of<CartBloc>(context)
+                      .add(RemoveFromCart(context: context, product: product)),
+                  child: CustomButton(
+                    text: 'Remove',
+                  ),
+                ),
               ),
               CustomButton(
                 text: 'Buy this now',

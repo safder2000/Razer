@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:razer/application/cart/cart_bloc.dart';
 
 import 'package:razer/core/colors.dart';
 import 'package:razer/core/constents.dart';
+import 'package:razer/model/product_model.dart';
 import 'package:razer/presentation/cart/screen_cart.dart';
 import 'package:razer/presentation/shop/order_summery/screen_order_summary.dart';
 
 class ScreenBuyItem extends StatelessWidget {
-  const ScreenBuyItem({super.key});
-
+  ScreenBuyItem({super.key, required this.product});
+  Product product;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,23 +47,43 @@ class ScreenBuyItem extends StatelessWidget {
             child: Container(
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: NetworkImage(
-                    'https://assets3.razerzone.com/TnqXo5lYR1pUaLT9vEhWg49uD7c=/1500x1000/https%3A%2F%2Fhybrismediaprod.blob.core.windows.net%2Fsys-master-phoenix-images-container%2Fh27%2Fhde%2F9286404898846%2F210104-blade14-p8-fhd-1500x1000-3.jpg',
-                  ),
+                  image: product.images.isEmpty
+                      ? NetworkImage(
+                          'https://assets3.razerzone.com/TnqXo5lYR1pUaLT9vEhWg49uD7c=/1500x1000/https%3A%2F%2Fhybrismediaprod.blob.core.windows.net%2Fsys-master-phoenix-images-container%2Fh27%2Fhde%2F9286404898846%2F210104-blade14-p8-fhd-1500x1000-3.jpg',
+                        )
+                      : NetworkImage(product.images[0]),
                 ),
               ),
             ),
           ),
           height_10,
-          Text(
-            'Razer Blade 14 - QHD 165Hz - GeForce RTX 3080 Ti - Black',
-            style: TextStyle(fontSize: 18),
+          Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.93,
+                  child: Text(
+                    product.name,
+                    overflow: TextOverflow.clip,
+                    style: TextStyle(fontSize: 18),
+                  ),
+                ),
+              ),
+            ],
           ),
           height_10,
           height_10,
-          Text(
-            '14-inch Gaming Laptop with AMD Ryzen™ 6900HX ',
-            style: TextStyle(fontSize: 14, color: Colors.white70),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+            child: SizedBox(
+              width: MediaQuery.of(context).size.width * 0.93,
+              child: Text(
+                product.description,
+                overflow: TextOverflow.clip,
+                style: TextStyle(fontSize: 14, color: Colors.white70),
+              ),
+            ),
           ),
           height_10,
           Container(
@@ -69,7 +92,7 @@ class ScreenBuyItem extends StatelessWidget {
             color: Colors.white10,
             child: Center(
               child: Text(
-                'US  \$3,456.99',
+                'US  \$${product.price}',
                 style: TextStyle(
                     fontSize: 17,
                     fontWeight: FontWeight.bold,
@@ -81,16 +104,22 @@ class ScreenBuyItem extends StatelessWidget {
           Row(
             children: [
               Expanded(
-                child: Container(
-                  height: 60,
-                  color: Colors.white,
-                  child: Center(
-                    child: Text(
-                      'Add To Cart',
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold),
+                child: GestureDetector(
+                  onTap: () {
+                    BlocProvider.of<CartBloc>(context)
+                        .add(AddToCart(product: product, context: context));
+                  },
+                  child: Container(
+                    height: 60,
+                    color: Colors.white,
+                    child: Center(
+                      child: Text(
+                        'Add To Cart',
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold),
+                      ),
                     ),
                   ),
                 ),

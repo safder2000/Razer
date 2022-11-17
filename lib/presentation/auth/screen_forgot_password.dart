@@ -185,10 +185,13 @@ class ScreenForgotPassword extends StatelessWidget {
       await FirebaseAuth.instance.sendPasswordResetEmail(
         email: email.text.trim(),
       );
-      Utils.showSnackBar(text: 'Password reset email send', color: justgreen);
+      Utils.showSnackBar(
+          text: 'Password reset email send',
+          color: justgreen,
+          context: context);
     } on FirebaseAuthException catch (e) {
       print(">>>>>>>> Exception caught $e");
-      Utils.showSnackBar(text: e.message);
+      Utils.showSnackBar(text: e.message, context: context);
     }
     // navigatorKey.currentState!.pop((route) => route);
     Navigator.pop(context);

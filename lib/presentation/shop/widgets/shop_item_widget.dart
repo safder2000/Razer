@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:razer/core/colors.dart';
 import 'package:razer/core/constents.dart';
+import 'package:razer/model/product_model.dart';
 
 class ShopItemWidget extends StatelessWidget {
   ShopItemWidget({
+    required this.product,
     this.isOffer = false,
     this.isUnavailable = false,
     Key? key,
   }) : super(key: key);
   bool isOffer;
   bool isUnavailable;
+  Product product;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -25,10 +28,10 @@ class ShopItemWidget extends StatelessWidget {
                       child: Container(
                         width: 140,
                         height: 30,
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           color: Colors.white12,
                         ),
-                        child: Center(
+                        child: const Center(
                           child: Text(
                             'Currently unavailable',
                             style: TextStyle(color: theAmber, fontSize: 12),
@@ -36,7 +39,7 @@ class ShopItemWidget extends StatelessWidget {
                         ),
                       ),
                     )
-                  : SizedBox(),
+                  : const SizedBox(),
               isOffer
                   ? Positioned(
                       left: 0,
@@ -44,10 +47,10 @@ class ShopItemWidget extends StatelessWidget {
                       child: Container(
                         width: 50,
                         height: 30,
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           color: Colors.white12,
                         ),
-                        child: Center(
+                        child: const Center(
                           child: Text(
                             '20%',
                             style: TextStyle(
@@ -58,13 +61,14 @@ class ShopItemWidget extends StatelessWidget {
                         ),
                       ),
                     )
-                  : SizedBox(),
+                  : const SizedBox(),
               Container(
-                decoration: const BoxDecoration(
-                  color: Color.fromARGB(22, 167, 167, 167),
+                decoration: BoxDecoration(
+                  color: const Color.fromARGB(22, 167, 167, 167),
                   image: DecorationImage(
                     fit: BoxFit.cover,
-                    image: AssetImage('lib/assets/catogory_pc.png'),
+                    image: NetworkImage("${product.images[0]}"),
+                    // AssetImage('lib/assets/catogory_pc.png')
                   ),
                 ),
                 height: 150,
@@ -72,19 +76,35 @@ class ShopItemWidget extends StatelessWidget {
             ],
           ),
           Container(
-            color: Color.fromARGB(27, 255, 255, 255),
+            color: const Color.fromARGB(27, 255, 255, 255),
             height: 100,
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Razer Blade 14 - QHD ...'),
-                    height_5,
-                    Text(
-                      '14-inch Gaming Laptop with AMD Ryzen™ 6900HX   ',
-                      style: TextStyle(color: Colors.white60, fontSize: 12),
+                    SizedBox(
+                      height: 20,
+                      child: Text(
+                        product.name,
+                        style: const TextStyle(fontSize: 15),
+                      ),
                     ),
+                    // Text('Razer Blade 14 - QHD ...'),
+                    height_5,
+                    SizedBox(
+                      child: Text(
+                        product.description,
+                        style: const TextStyle(
+                          color: Colors.white60,
+                          fontSize: 12,
+                        ),
+                      ),
+                    ),
+                    // Text(
+                    //   '14-inch Gaming Laptop with AMD Ryzen™ 6900HX   ',
+                    //   style: TextStyle(color: Colors.white60, fontSize: 12),
+                    // ),
                     height_10,
                     Row(
                       children: [
@@ -92,14 +112,16 @@ class ShopItemWidget extends StatelessWidget {
                             ? Row(
                                 children: [
                                   Text(
-                                    '\$2435',
-                                    style: TextStyle(
+                                    ("\$${product.price}"),
+                                    overflow: TextOverflow.ellipsis,
+                                    // '\$2435',
+                                    style: const TextStyle(
                                         decoration: TextDecoration.lineThrough,
                                         color: Colors.white70,
                                         fontSize: 14,
                                         fontWeight: FontWeight.bold),
                                   ),
-                                  Text(
+                                  const Text(
                                     ' USD \$2000',
                                     style: TextStyle(
                                         color: razergreen,
@@ -110,20 +132,20 @@ class ShopItemWidget extends StatelessWidget {
                               )
                             : isUnavailable
                                 ? Text(
-                                    'USD \$2435',
-                                    style: TextStyle(
+                                    "USD\$${product.price}",
+                                    style: const TextStyle(
                                         color: Colors.white60,
                                         fontSize: 14,
                                         fontWeight: FontWeight.bold),
                                   )
                                 : Text(
-                                    'USD \$2435',
+                                    'USD \$${product.price}',
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 14,
                                         fontWeight: FontWeight.bold),
                                   ),
-                        Spacer(),
+                        const Spacer(),
                         // Container(
                         //   height: 15,
                         //   width: 30,

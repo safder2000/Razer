@@ -35,12 +35,12 @@ class ScreenWishlist extends StatelessWidget {
         children: [
           GestureDetector(
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute<void>(
-                    builder: (BuildContext context) => ScreenBuyItem(),
-                  ),
-                );
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute<void>(
+                //     builder: (BuildContext context) => ScreenBuyItem(),
+                //   ),
+                // );
               },
               child: WishlistItemWidget()),
           WishlistItemWidget(),
