@@ -85,7 +85,7 @@ class CartItemWidget extends StatelessWidget {
               ),
               const Spacer(),
               RatingBarIndicator(
-                rating: 2.75,
+                rating: product.rating.toDouble(),
                 itemBuilder: (context, index) => Icon(
                   Icons.star,
                   color: Colors.amber,

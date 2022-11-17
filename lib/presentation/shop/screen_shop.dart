@@ -17,7 +17,7 @@ class ScreenShop extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           catogory,
-          style: TextStyle(color: justgreen),
+          style: const TextStyle(color: justgreen),
         ),
         actions: [
           IconButton(
@@ -47,15 +47,30 @@ class ScreenShop extends StatelessWidget {
           builder: (context, snapshot) {
             if (snapshot.hasError) {
               return Center(
-                  child: Text(
-                'somthing went wrong ${snapshot.error}',
-                style: TextStyle(color: Colors.white),
+                  child: Column(
+                children: [
+                  const Text(
+                    'somthing went wrong ',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  Text(
+                    '${snapshot.error}',
+                    style: const TextStyle(color: Colors.white),
+                  ),
+                ],
               ));
             } else if (snapshot.hasData) {
               final product = snapshot.data;
-              return itemGrid(context, product!);
+              if (product == null || product.isEmpty) {
+                return const Center(
+                    child: Text('No products under this catogory'));
+              } else if (product.isNotEmpty) {
+                return itemGrid(context, product);
+              } else {
+                return const Center(child: Text('unknown error'));
+              }
             } else {
-              return Center(child: CircularProgressIndicator());
+              return const Center(child: CircularProgressIndicator());
             }
           }),
     );

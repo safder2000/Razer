@@ -21,20 +21,8 @@ class ScreenCategories extends StatelessWidget {
           child: GridView.count(
             crossAxisCount: 3,
             children: [
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute<void>(
-                      builder: (BuildContext context) => ScreenShop(
-                        catogory: 'laptops',
-                      ),
-                    ),
-                  );
-                },
-                child: CatogoryTile(
-                    imgPath: 'lib/assets/catogory_pc.png', title: 'LapTops'),
-              ),
+              CatogoryTile(
+                  imgPath: 'lib/assets/catogory_pc.png', title: 'LapTops'),
               CatogoryTile(
                   imgPath: 'lib/assets/catogory_components.png',
                   title: 'Components'),
