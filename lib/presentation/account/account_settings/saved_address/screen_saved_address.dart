@@ -1,7 +1,9 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:razer/application/address/address_bloc.dart';
 import 'package:razer/core/colors.dart';
 import 'package:razer/core/constents.dart';
 import 'package:razer/functions/locator_functions/geo_locator_current_pos.dart';
@@ -112,13 +114,21 @@ class ScreenSavedAddress extends StatelessWidget {
   }
 
   SizedBox textfield(
-      {String hint = "none", double width = double.infinity, double? height}) {
+      {String hint = "none",
+      String initialvalue = '',
+      double width = double.infinity,
+      double? height}) {
     return SizedBox(
       width: width,
       height: height ?? 60,
-      child: TextField(
+      child: TextFormField(
+        initialValue: initialvalue,
         textAlign: TextAlign.start,
         style: const TextStyle(color: Colors.white, fontSize: 16),
+        autovalidateMode: AutovalidateMode.onUserInteraction,
+        validator: (value) => value != null && value.length <= 6
+            ? 'password must be atleast 6 char long'
+            : null,
         decoration: InputDecoration(
             // errorText: _validate ? 'wrong password' : null,
             focusedBorder: const OutlineInputBorder(
@@ -157,12 +167,12 @@ class ScreenSavedAddress extends StatelessWidget {
                       style: TextStyle(color: Colors.white70),
                     ),
                     IconButton(
-                        onPressed: () async {
-                          Position position = await determinePosition();
-                          _currentLocation(context, position);
-                          Navigator.pop(context);
-                          GetAddress(position);
-                          log(position.altitude.toString());
+                        onPressed: () {
+                          BlocProvider.of<AddressBloc>(context)
+                              .add(FindLocation());
+                          _currentLocation(context);
+
+                          // Navigator.pop(context);
                         },
                         icon: Icon(
                           Icons.gps_fixed,
@@ -209,7 +219,9 @@ class ScreenSavedAddress extends StatelessWidget {
         });
   }
 
-  _currentLocation(context, Position position) {
+  _currentLocation(
+    context,
+  ) {
     showModalBottomSheet(
         backgroundColor: Colors.black,
         isScrollControlled: true,
@@ -218,40 +230,61 @@ class ScreenSavedAddress extends StatelessWidget {
           return Padding(
             padding: EdgeInsets.only(
                 bottom: MediaQuery.of(context).viewInsets.bottom),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                textfield(hint: 'Full Name', width: 400),
-                height_10,
-                textfield(hint: 'Mobile Number', width: 400),
-                height_10,
-                textfield(hint: 'Pincode', width: 400),
-                height_10,
-                Row(
+            child: BlocBuilder<AddressBloc, AddressState>(
+              builder: (context, state) {
+                return Column(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
-                    width_5,
-                    textfield(hint: 'State', width: 195),
-                    width_10,
-                    textfield(hint: 'City', width: 195),
+                    textfield(hint: 'Full Name', width: 400),
+                    height_10,
+                    textfield(hint: 'Mobile Number', width: 400),
+                    height_10,
+                    textfield(
+                      hint: 'Pincode',
+                      width: 400,
+                      initialvalue: "${state.placemark[0].postalCode}",
+                    ),
+                    height_10,
+                    Row(
+                      children: [
+                        width_5,
+                        textfield(
+                            hint: 'State',
+                            width: 195,
+                            initialvalue:
+                                "${state.placemark[0].administrativeArea}"),
+                        width_10,
+                        textfield(
+                          hint: 'City',
+                          width: 195,
+                          initialvalue: "${state.placemark[0].locality}",
+                        ),
+                      ],
+                    ),
+                    height_10,
+                    textfield(
+                      hint: 'Road name,Area,colony..',
+                      width: 400,
+                      height: 60,
+                      initialvalue:
+                          "${state.placemark[0].subLocality}, ${state.placemark[0].street}, near ${state.placemark[0].name}",
+                    ),
+                    height_10,
+                    ElevatedButton(
+                      onPressed: () {},
+                      child: Text(
+                        '    ADD   ',
+                        style: TextStyle(fontSize: 17),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                          elevation: 0,
+                          textStyle: const TextStyle(fontSize: 20),
+                          backgroundColor: Colors.white24),
+                    ),
+                    height_10,
                   ],
-                ),
-                height_10,
-                textfield(
-                    hint: 'Road name,Area,colony..', width: 400, height: 60),
-                height_10,
-                ElevatedButton(
-                  onPressed: () {},
-                  child: Text(
-                    '    ADD   ',
-                    style: TextStyle(fontSize: 17),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                      elevation: 0,
-                      textStyle: const TextStyle(fontSize: 20),
-                      backgroundColor: Colors.white24),
-                ),
-                height_10,
-              ],
+                );
+              },
             ),
           );
         });

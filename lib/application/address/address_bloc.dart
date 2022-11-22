@@ -15,7 +15,17 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
     });
     on<FindLocation>((event, emit) async {
       Position position = await determinePosition();
-      GetAddress(position);
+      final address = await GetAddress(position);
+      emit(AddressState(placemark: address));
+      // emit(
+      //   AddressState(
+      //     state: "${address.state}",
+      //     locality: "${address.locality}",
+      //     Sublocality: "${address.Sublocality}",
+      //     Street: "${address.Street}",
+      //     road: "${address.road}",
+      //   ),
+      // );
     });
   }
 }
