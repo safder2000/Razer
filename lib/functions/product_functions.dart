@@ -5,8 +5,8 @@ import 'package:razer/presentation/categories/widgets/catogory_tile_widgets.dart
 class ProductFn {
   static Stream<List<Product>> readProducts({required String catogory}) =>
       FirebaseFirestore.instance
-          .collection('products')
-          .doc('categories')
+          .collection('categories')
+          .doc(catogory)
           .collection(catogory)
           .snapshots()
           .map((snapshot) => snapshot.docs
