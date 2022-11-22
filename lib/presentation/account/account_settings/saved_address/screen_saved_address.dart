@@ -1,6 +1,10 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:razer/core/colors.dart';
 import 'package:razer/core/constents.dart';
+import 'package:razer/functions/locator_functions/geo_locator_current_pos.dart';
 import 'package:razer/presentation/account/account_settings/save_card_n_wallet/cardsNwallet.dart';
 
 class ScreenSavedAddress extends StatelessWidget {
@@ -133,6 +137,79 @@ class ScreenSavedAddress extends StatelessWidget {
   }
 
   _modalBottomSheetMenu(context) {
+    showModalBottomSheet(
+        backgroundColor: Colors.black,
+        isScrollControlled: true,
+        context: context,
+        builder: (builder) {
+          return Padding(
+            padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).viewInsets.bottom),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                height_10,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text(
+                      'use current location',
+                      style: TextStyle(color: Colors.white70),
+                    ),
+                    IconButton(
+                        onPressed: () async {
+                          Position position = await determinePosition();
+                          _currentLocation(context, position);
+                          Navigator.pop(context);
+                          GetAddress(position);
+                          log(position.altitude.toString());
+                        },
+                        icon: Icon(
+                          Icons.gps_fixed,
+                          color: Colors.white,
+                          size: 30,
+                        )),
+                    width_10
+                  ],
+                ),
+                height_10,
+                textfield(hint: 'Full Name', width: 400),
+                height_10,
+                textfield(hint: 'Mobile Number', width: 400),
+                height_10,
+                textfield(hint: 'Pincode', width: 400),
+                height_10,
+                Row(
+                  children: [
+                    width_5,
+                    textfield(hint: 'State', width: 195),
+                    width_10,
+                    textfield(hint: 'City', width: 195),
+                  ],
+                ),
+                height_10,
+                textfield(
+                    hint: 'Road name,Area,colony..', width: 400, height: 60),
+                height_10,
+                ElevatedButton(
+                  onPressed: () {},
+                  child: Text(
+                    '    ADD   ',
+                    style: TextStyle(fontSize: 17),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                      elevation: 0,
+                      textStyle: const TextStyle(fontSize: 20),
+                      backgroundColor: Colors.white24),
+                ),
+                height_10,
+              ],
+            ),
+          );
+        });
+  }
+
+  _currentLocation(context, Position position) {
     showModalBottomSheet(
         backgroundColor: Colors.black,
         isScrollControlled: true,
