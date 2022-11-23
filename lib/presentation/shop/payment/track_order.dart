@@ -47,17 +47,17 @@ class TrackOrder extends StatelessWidget {
                 ),
               ],
             ),
-            Row(
-              children: [
-                width_5,
-                CircleAvatar(
-                  backgroundColor: Colors.white70,
-                  radius: 10,
-                ),
-                width_10,
-                Text('Shipped'),
-              ],
-            ),
+            // Row(
+            //   children: [
+            //     width_5,
+            //     CircleAvatar(
+            //       backgroundColor: Colors.white70,
+            //       radius: 10,
+            //     ),
+            //     width_10,
+            //     Text('Shipped'),
+            //   ],
+            // ),
             Row(
               children: [
                 width_10,

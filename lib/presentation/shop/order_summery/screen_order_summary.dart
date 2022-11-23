@@ -3,13 +3,15 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:razer/core/colors.dart';
 import 'package:razer/core/constents.dart';
+import 'package:razer/model/product_model.dart';
 import 'package:razer/presentation/shop/order_summery/widgets/items.dart';
 import 'package:razer/presentation/shop/order_summery/widgets/price_details.dart';
 import 'package:razer/presentation/shop/payment/screen_payment.dart';
 import 'widgets/deliver_to.dart';
 
 class ScreenOederSummery extends StatelessWidget {
-  const ScreenOederSummery({super.key});
+  ScreenOederSummery({super.key, required this.product});
+  Product product;
 
   @override
   Widget build(BuildContext context) {
@@ -34,17 +36,21 @@ class ScreenOederSummery extends StatelessWidget {
           ),
           const DeliverTo(),
           height_10,
-          const Item(),
+          Item(
+            product: product,
+          ),
           height_10,
-          const PriceDetails(),
+          PriceDetails(
+            product: product,
+          ),
           const Spacer(),
           Row(
             children: [
-              const Expanded(
+              Expanded(
                 child: SizedBox(
                   child: Center(
                     child: Text(
-                      '199.00',
+                      '${product.price}',
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: 20,

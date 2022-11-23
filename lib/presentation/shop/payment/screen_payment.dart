@@ -96,18 +96,23 @@ class ScreenPayment extends StatelessWidget {
                         builder: (BuildContext context) => TrackOrder(),
                       ),
                     ),
-                    child: Container(
-                      height: 50,
-                      decoration: BoxDecoration(
-                          color: theAmber,
-                          borderRadius: BorderRadius.circular(8)),
-                      child: const Center(
-                        child: Text(
-                          ' Pay ',
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold),
+                    child: InkWell(
+                      onTap: () {
+                        //   here
+                      },
+                      child: Container(
+                        height: 50,
+                        decoration: BoxDecoration(
+                            color: theAmber,
+                            borderRadius: BorderRadius.circular(8)),
+                        child: const Center(
+                          child: Text(
+                            ' Pay ',
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold),
+                          ),
                         ),
                       ),
                     ),

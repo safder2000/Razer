@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:razer/application/EditProfile/edit_profile_bloc.dart';
+import 'package:razer/application/Order/order_bloc.dart';
 import 'package:razer/application/address/address_bloc.dart';
 import 'package:razer/application/auth/auth_bloc.dart';
 import 'package:razer/application/cart/cart_bloc.dart';
@@ -38,6 +39,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<AddressBloc>(
           create: (BuildContext context) => AddressBloc(),
+        ),
+        BlocProvider<OrderBloc>(
+          create: (BuildContext context) => OrderBloc(),
         ),
       ],
       child: MaterialApp(

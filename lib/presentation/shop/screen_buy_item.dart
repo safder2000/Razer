@@ -130,7 +130,9 @@ class ScreenBuyItem extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute<void>(
-                        builder: (BuildContext context) => ScreenOederSummery(),
+                        builder: (BuildContext context) => ScreenOederSummery(
+                          product: product,
+                        ),
                       ),
                     );
                   },

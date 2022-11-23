@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:razer/core/colors.dart';
 import 'package:razer/core/constents.dart';
+import 'package:razer/model/product_model.dart';
 
 class Item extends StatelessWidget {
-  const Item({
+  Item({
     Key? key,
+    required this.product,
   }) : super(key: key);
-
+  Product product;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -26,7 +28,8 @@ class Item extends StatelessWidget {
                     width: 90,
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                          image: AssetImage('lib/assets/catogory_console.png')),
+                          image: NetworkImage(
+                              '${product.images.isEmpty ? 'https://www.freeiconspng.com/thumbs/no-image-icon/no-image-icon-6.png' : product.images[0]}')),
                       borderRadius: BorderRadius.circular(5),
                       color: Colors.black87,
                     ),
@@ -38,16 +41,16 @@ class Item extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   height_10,
-                  const SizedBox(
+                  SizedBox(
                     width: 290,
                     child: Text(
-                      'Charging Stand for Xbox Razer Limited Edition...',
+                      '${product.name}',
                       style: TextStyle(fontSize: 16),
                       overflow: TextOverflow.clip,
                     ),
                   ),
-                  const Text(
-                    '\$ 199',
+                  Text(
+                    '\$ ${product.price}',
                     style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
                   )
                 ],

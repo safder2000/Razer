@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:razer/core/colors.dart';
 import 'package:razer/core/constents.dart';
+import 'package:razer/model/product_model.dart';
 
 class PriceDetails extends StatelessWidget {
-  const PriceDetails({
-    Key? key,
-  }) : super(key: key);
+  PriceDetails({Key? key, required this.product}) : super(key: key);
+  Product product;
 
   @override
   Widget build(BuildContext context) {
