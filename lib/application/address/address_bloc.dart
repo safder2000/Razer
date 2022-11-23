@@ -10,11 +10,12 @@ part 'address_state.dart';
 
 class AddressBloc extends Bloc<AddressEvent, AddressState> {
   AddressBloc() : super(InitialState()) {
-    on<AddressEvent>((event, emit) {
-      // TODO: implement event handler
-    });
+    on<AddressEvent>((event, emit) {});
+
     on<FindLocation>((event, emit) async {
+      // 🎯 target acquired
       Position position = await determinePosition();
+      // i know where you live 📌🗺️
       final address = await GetAddress(position);
       emit(AddressState(placemark: address));
       // emit(
@@ -27,5 +28,7 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
       //   ),
       // );
     });
+    //saving 📌🗺️  to db ⬆️
+    on<SaveAddress>((event, emit) {});
   }
 }
