@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:meta/meta.dart';
+import 'package:razer/functions/address/address_functions.dart';
 
 import '../../functions/locator_functions/geo_locator_current_pos.dart';
 
@@ -29,6 +30,15 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
       // );
     });
     //saving 📌🗺️  to db ⬆️
-    on<SaveAddress>((event, emit) {});
+    on<SaveAddress>((event, emit) {
+      AddressFunctions.saveAddress(
+          name: event.name,
+          number: event.number,
+          pincode: event.pincode,
+          state: event.state,
+          city: event.city,
+          localArea: event.localAddress);
+      emit(state);
+    });
   }
 }
