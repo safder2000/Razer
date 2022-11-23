@@ -42,8 +42,7 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
             email: state.profile.email,
             name: event.name,
             number: event.number,
-            profilePic: state.profile.profilePic ??
-                'https://w1.pngwing.com/pngs/743/500/png-transparent-circle-silhouette-logo-user-user-profile-green-facial-expression-nose-cartoon.png',
+            profilePic: state.profile.profilePic,
           ),
         ),
       );

@@ -198,8 +198,7 @@ class ScreenAccount extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute<void>(
-                        builder: (BuildContext context) =>
-                            const ScreenSavedAddress(),
+                        builder: (BuildContext context) => ScreenSavedAddress(),
                       ),
                     );
                   },
