@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:razer/core/colors.dart';
 import 'package:razer/core/constents.dart';
+import 'package:razer/functions/order_functions/order_functions.dart';
+import 'package:razer/model/product_model.dart';
 import 'package:razer/presentation/shop/payment/track_order.dart';
 
 class ScreenPayment extends StatelessWidget {
-  const ScreenPayment({super.key});
+  ScreenPayment({super.key, required this.product});
+  Product product;
 
   @override
   Widget build(BuildContext context) {
@@ -85,7 +88,9 @@ class ScreenPayment extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute<void>(
-                        builder: (BuildContext context) => ScreenPayment(),
+                        builder: (BuildContext context) => ScreenPayment(
+                          product: product,
+                        ),
                       ),
                     );
                   },
@@ -93,26 +98,25 @@ class ScreenPayment extends StatelessWidget {
                     onTap: () => Navigator.push(
                       context,
                       MaterialPageRoute<void>(
-                        builder: (BuildContext context) => TrackOrder(),
+                        builder: (BuildContext context) {
+                          OrderFunctions.addToCart(
+                              product: product, quantinty: 1);
+                          return TrackOrder();
+                        },
                       ),
                     ),
-                    child: InkWell(
-                      onTap: () {
-                        //   here
-                      },
-                      child: Container(
-                        height: 50,
-                        decoration: BoxDecoration(
-                            color: theAmber,
-                            borderRadius: BorderRadius.circular(8)),
-                        child: const Center(
-                          child: Text(
-                            ' Pay ',
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold),
-                          ),
+                    child: Container(
+                      height: 50,
+                      decoration: BoxDecoration(
+                          color: theAmber,
+                          borderRadius: BorderRadius.circular(8)),
+                      child: const Center(
+                        child: Text(
+                          ' Pay ',
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold),
                         ),
                       ),
                     ),

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:razer/core/colors.dart';
 
 import 'package:razer/core/constents.dart';
+import 'package:razer/functions/user_profile_functions.dart';
 import 'package:razer/model/user_profile_model.dart';
 import 'package:razer/presentation/account/Orders/screen_orders.dart';
 import 'package:razer/presentation/account/account_settings/edit_profille/screen_edit_profle.dart';
@@ -50,7 +51,7 @@ class ScreenAccount extends StatelessWidget {
           height_10,
           height_10,
           StreamBuilder<List<UserProfile>>(
-              stream: null,
+              stream: readProfile(),
               builder: (context, snapshot) {
                 if (snapshot.hasError) {
                   return Center(
@@ -68,9 +69,7 @@ class ScreenAccount extends StatelessWidget {
                   ));
                 } else if (snapshot.hasData) {
                   final user = snapshot.data;
-                  if (user == null || user.isEmpty) {
-                    return noDataFound();
-                  } else if (user.isNotEmpty) {
+                  if (user != null && user.isNotEmpty) {
                     return Row(
                       children: [
                         width_10,
@@ -93,7 +92,6 @@ class ScreenAccount extends StatelessWidget {
                         )
                       ],
                     );
-                    ;
                   } else {
                     return noDataFound();
                   }

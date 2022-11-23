@@ -5,20 +5,17 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:razer/application/EditProfile/edit_profile_bloc.dart';
 import 'package:razer/model/user_profile_model.dart';
 
-Future addProduct({
-  required String email,
+Future saveProfile({
   required String name,
   required String profilePic,
-  required List<int> number,
 }) async {
   final oldEmail = FirebaseAuth.instance.currentUser!.email;
   final docProduct = FirebaseFirestore.instance
       .collection('users')
       .doc(oldEmail)
       .collection('userProfile')
-      .doc();
-  final UserProfile profile = UserProfile(
-      email: oldEmail!, name: name, number: number, profilePic: profilePic);
+      .doc('profile');
+  final UserProfile profile = UserProfile(name: name, profilePic: profilePic);
 
   final json = profile.toJson();
   log('befre adding');

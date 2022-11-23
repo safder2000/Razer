@@ -65,7 +65,9 @@ class ScreenOederSummery extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute<void>(
-                        builder: (BuildContext context) => ScreenPayment(),
+                        builder: (BuildContext context) => ScreenPayment(
+                          product: product,
+                        ),
                       ),
                     );
                   },

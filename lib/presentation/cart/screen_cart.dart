@@ -20,38 +20,39 @@ class ScreenCart extends StatelessWidget {
         backgroundColor: Colors.black,
       ),
       body: StreamBuilder<List<Product>>(
-          stream: readCart(),
-          builder: (context, snapshot) {
-            if (snapshot.hasError) {
+        stream: readCart(),
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return Center(
+                child: Text(
+              'somthing went wrong ${snapshot.error}',
+              style: TextStyle(color: Colors.white),
+            ));
+          } else if (snapshot.hasData) {
+            final products = snapshot.data;
+            if (products == null || products.isEmpty) {
               return Center(
-                  child: Text(
-                'somthing went wrong ${snapshot.error}',
-                style: TextStyle(color: Colors.white),
-              ));
-            } else if (snapshot.hasData) {
-              final products = snapshot.data;
-              if (products == null || products.isEmpty) {
-                return Center(
-                    child: Container(
-                        decoration: BoxDecoration(
-                  // borderRadius:BorderRadius(Radius.circular(20)) ,
-                  image: DecorationImage(
-                      image: NetworkImage(
-                          'https://shop.millenniumbooksource.com/static/images/cart1.png')),
-                )));
-              } else if (products.isNotEmpty) {
-                return ListView.builder(
-                  itemBuilder: (BuildContext, index) =>
-                      CartItemWidget(product: products[index]),
-                  itemCount: products.length,
-                );
-              } else {
-                return const Center(child: Text('unknown error'));
-              }
+                  child: Container(
+                      decoration: BoxDecoration(
+                // borderRadius:BorderRadius(Radius.circular(20)) ,
+                image: DecorationImage(
+                    image: NetworkImage(
+                        'https://shop.millenniumbooksource.com/static/images/cart1.png')),
+              )));
+            } else if (products.isNotEmpty) {
+              return ListView.builder(
+                itemBuilder: (BuildContext, index) =>
+                    CartItemWidget(product: products[index]),
+                itemCount: products.length,
+              );
             } else {
-              return Center(child: CircularProgressIndicator());
+              return const Center(child: Text('unknown error'));
             }
-          }),
+          } else {
+            return Center(child: CircularProgressIndicator());
+          }
+        },
+      ),
     );
   }
 }

@@ -21,9 +21,7 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
       emit(
         EditProfileState(
           profile: UserProfile(
-            email: state.profile.email,
             name: state.profile.name,
-            number: state.profile.number,
             profilePic: imageUrl ??
                 'https://w1.pngwing.com/pngs/743/500/png-transparent-circle-silhouette-logo-user-user-profile-green-facial-expression-nose-cartoon.png',
           ),
@@ -31,17 +29,14 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
       );
     });
     on<SaveProfie>((event, emit) {
-      addProduct(
-          email: state.profile.email,
-          name: event.name,
-          profilePic: state.profile.profilePic,
-          number: event.number);
+      saveProfile(
+        name: event.name,
+        profilePic: state.profile.profilePic,
+      );
       emit(
         EditProfileState(
           profile: UserProfile(
-            email: state.profile.email,
             name: event.name,
-            number: event.number,
             profilePic: state.profile.profilePic,
           ),
         ),

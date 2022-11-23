@@ -5,9 +5,9 @@ import 'package:razer/model/order_product_model.dart';
 import '../../model/product_model.dart';
 
 class OrderFunctions {
-  final email = FirebaseAuth.instance.currentUser!.email;
+  static final email = FirebaseAuth.instance.currentUser!.email;
 
-  Future addToCart({
+  static Future addToCart({
     required Product product,
     required int quantinty,
   }) async {

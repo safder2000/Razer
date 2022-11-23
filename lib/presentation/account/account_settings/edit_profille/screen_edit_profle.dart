@@ -27,27 +27,32 @@ class EditProfile extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Stack(
-                  children: [
-                    CircleAvatar(
-                      radius: 71,
-                      backgroundColor: Colors.white60,
-                      child: CircleAvatar(
-                        radius: 70,
-                        backgroundImage: NetworkImage(
-                          state.profile.profilePic,
+                InkWell(
+                  onTap: () {
+                    BlocProvider.of<EditProfileBloc>(context).add(ProfilePic());
+                  },
+                  child: Stack(
+                    children: [
+                      CircleAvatar(
+                        radius: 91,
+                        backgroundColor: Colors.white60,
+                        child: CircleAvatar(
+                          radius: 90,
+                          backgroundImage: NetworkImage(
+                            state.profile.profilePic,
+                          ),
                         ),
                       ),
-                    ),
-                    Positioned(
-                      bottom: 0,
-                      right: 0,
-                      child: CircleAvatar(
-                        radius: 20,
-                        child: Icon(Icons.edit),
-                      ),
-                    )
-                  ],
+                      Positioned(
+                        bottom: 0,
+                        right: 0,
+                        child: CircleAvatar(
+                          radius: 20,
+                          child: Icon(Icons.edit),
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ],
             ),
@@ -55,7 +60,6 @@ class EditProfile extends StatelessWidget {
             height_20,
             textfield('Name', name_controller),
             height_20,
-            textfield('Mobile Number', number_controller),
             height_20,
             height_20,
             height_20,
@@ -67,6 +71,7 @@ class EditProfile extends StatelessWidget {
                     BlocProvider.of<EditProfileBloc>(context).add(
                       SaveProfie(name: name_controller.text.trim(), number: []),
                     );
+                    Navigator.pop(context);
                   },
                   style: ElevatedButton.styleFrom(
                       elevation: 0,
@@ -91,7 +96,7 @@ class EditProfile extends StatelessWidget {
           child: TextFormField(
             controller: controller,
             textAlign: TextAlign.center,
-            obscureText: true,
+
             style: const TextStyle(color: Colors.white, fontSize: 16),
             // autovalidateMode: AutovalidateMode.onUserInteraction,
             // validator: (value) =>
