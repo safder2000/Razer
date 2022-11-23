@@ -23,3 +23,14 @@ class SaveAddress extends AddressEvent {
   String city;
   String localAddress;
 }
+
+// name speeks for it self
+class FetchAllAddress extends AddressEvent {
+  FetchAllAddress({required this.addressList});
+  List<AddressModel> addressList;
+}
+
+class ChangeDeliveryAddress extends AddressEvent {
+  ChangeDeliveryAddress({required this.address});
+  AddressModel address;
+}

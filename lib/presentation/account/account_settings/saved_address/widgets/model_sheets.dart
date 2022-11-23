@@ -70,7 +70,7 @@ modalBottomSheetMenu(context) {
                   hint: 'Mobile Number',
                   width: 400,
                   keybord: TextInputType.number,
-                  controller: name_ctr),
+                  controller: number_ctr),
               height_10,
               textfield(
                   hint: 'Pincode',
@@ -219,6 +219,37 @@ currentLocation(
                       } else {
                         Navigator.pop(context);
                         log('Text valid');
+                        BlocProvider.of<AddressBloc>(context).add(SaveAddress(
+                            name: name_ctr.text.trim().isEmpty
+                                ? 'no name given'
+                                : name_ctr.text.trim(),
+                            number: number_ctr.text.trim().isEmpty
+                                ? []
+                                : number_ctr.text
+                                    .trim()
+                                    .split('')
+                                    .map(int.parse)
+                                    .toList(),
+                            pincode: pincode_ctr.text.trim().isEmpty
+                                ? "${state.placemark[0].postalCode}"
+                                    .trim()
+                                    .split('')
+                                    .map(int.parse)
+                                    .toList()
+                                : "${state.placemark[0].postalCode}"
+                                    .trim()
+                                    .split('')
+                                    .map(int.parse)
+                                    .toList(),
+                            state: state_ctr.text.trim().isEmpty
+                                ? "${state.placemark[0].administrativeArea}"
+                                : "${state.placemark[0].administrativeArea}",
+                            city: city_ctr.text.trim().isEmpty
+                                ? "${state.placemark[0].locality}"
+                                : "${state.placemark[0].locality}",
+                            localAddress: localAddress_ctr.text.trim().isEmpty
+                                ? "${state.placemark[0].subLocality}, ${state.placemark[0].street}, near ${state.placemark[0].name}"
+                                : "${state.placemark[0].subLocality}, ${state.placemark[0].street}, near ${state.placemark[0].name}"));
                       }
                     },
                     child: const Text(

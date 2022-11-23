@@ -1,13 +1,12 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:razer/application/address/address_bloc.dart';
 import 'package:razer/core/colors.dart';
 import 'package:razer/core/constents.dart';
-import 'package:razer/functions/locator_functions/geo_locator_current_pos.dart';
+import 'package:razer/functions/address/address_functions.dart';
+import 'package:razer/model/address_model.dart';
 import 'package:razer/presentation/account/account_settings/save_card_n_wallet/cardsNwallet.dart';
+import 'package:razer/presentation/account/account_settings/saved_address/widgets/address_card.dart';
 import 'package:razer/presentation/account/account_settings/saved_address/widgets/model_sheets.dart';
 
 class ScreenSavedAddress extends StatelessWidget {
@@ -15,6 +14,7 @@ class ScreenSavedAddress extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    _fetchAllAddresses(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: justBlack,
@@ -25,7 +25,7 @@ class ScreenSavedAddress extends StatelessWidget {
       ),
       body: Form(
         key: addressFormKey,
-        child: Column(
+        child: ListView(
           children: [
             greenDiv,
             height_20,
@@ -46,41 +46,48 @@ class ScreenSavedAddress extends StatelessWidget {
               ],
             ),
             height_10,
-            Container(
-              height: 180,
-              width: MediaQuery.of(context).size.width * 0.92,
-              color: Colors.white12,
-              child: Stack(
-                children: [
-                  Positioned(
-                    top: 20,
-                    left: 30,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        height_10,
-                        const Text(
-                          'Makima',
-                          style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.bold),
-                        ),
-                        height_10,
-                        const Text(
-                            'Flat no H6-902 Arun excello, temple green,\nSripepambur , vallaikotte,\n608768\n\n8976564322')
-                      ],
-                    ),
-                  ),
-                  const Positioned(
-                    right: 10,
-                    top: 10,
-                    child: Icon(
-                      Icons.edit_location_alt_outlined,
-                      color: Colors.white,
-                    ),
-                  )
-                ],
-              ),
-            )
+            StreamBuilder<List<AddressModel>>(
+              stream: AddressFunctions.fetchAllAddressesStream(),
+              builder: (context, snapshot) {
+                if (snapshot.hasError) {
+                  return Center(
+                      child: Text(
+                    'somthing went wrong ${snapshot.error}',
+                    style: TextStyle(color: Colors.white),
+                  ));
+                } else if (snapshot.hasData) {
+                  final addresses = snapshot.data;
+                  if (addresses == null || addresses.isEmpty) {
+                    return Center(
+                        child: Container(
+                            decoration: BoxDecoration(
+                      // borderRadius:BorderRadius(Radius.circular(20)) ,
+                      image: DecorationImage(
+                          image: NetworkImage(
+                              'https://cdni.iconscout.com/illustration/premium/thumb/no-address-found-4344458-3613886.png')),
+                    )));
+                  } else if (addresses.isNotEmpty) {
+                    return ListView.separated(
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: addresses.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return AddressCard(
+                          address: addresses[index],
+                        );
+                      },
+                      separatorBuilder: (BuildContext context, int index) {
+                        return height_10;
+                      },
+                    );
+                  } else {
+                    return const Center(child: Text('unknown error'));
+                  }
+                } else {
+                  return Center(child: CircularProgressIndicator());
+                }
+              },
+            ),
           ],
         ),
       ),
@@ -115,5 +122,11 @@ class ScreenSavedAddress extends StatelessWidget {
         return alert;
       },
     );
+  }
+
+  _fetchAllAddresses(context) async {
+    final _addresses = await AddressFunctions.fetchAllAddresses();
+    BlocProvider.of<AddressBloc>(context)
+        .add(FetchAllAddress(addressList: _addresses));
   }
 }

@@ -93,12 +93,13 @@ class ShopItemWidget extends StatelessWidget {
                     // Text('Razer Blade 14 - QHD ...'),
                     height_5,
                     SizedBox(
+                      height: 31,
                       child: Text(
                         product.description,
                         style: const TextStyle(
-                          color: Colors.white60,
-                          fontSize: 12,
-                        ),
+                            color: Colors.white60,
+                            fontSize: 12,
+                            overflow: TextOverflow.ellipsis),
                       ),
                     ),
                     // Text(

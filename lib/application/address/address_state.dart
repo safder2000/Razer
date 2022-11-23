@@ -2,28 +2,27 @@ part of 'address_bloc.dart';
 
 @immutable
 class AddressState {
-  AddressState({required this.placemark
-      // required this.state,
-      // required this.locality,
-      // required this.Sublocality,
-      // required this.Street,
-      // required this.road,
-      });
+  AddressState({
+    required this.placemark,
+    required this.addresses,
+    required this.isCurrentAddress,
+  });
   List<Placemark> placemark;
-  // String state;
-  // String locality;
-  // String Sublocality;
-  // String Street;
-  // String road;
+  List<AddressModel> addresses;
+  bool isCurrentAddress;
 }
 
 class InitialState extends AddressState {
   InitialState()
-      : super(placemark: []
-            // Street: '',
-            // state: '',
-            // Sublocality: '',
-            // locality: '',
-            // road: '',
-            );
+      : super(
+          placemark: [],
+          addresses: [],
+          isCurrentAddress: false,
+
+          // Street: '',
+          // state: '',
+          // Sublocality: '',
+          // locality: '',
+          // road: '',
+        );
 }

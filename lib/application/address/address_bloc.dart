@@ -3,6 +3,7 @@ import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:meta/meta.dart';
 import 'package:razer/functions/address/address_functions.dart';
+import 'package:razer/model/address_model.dart';
 
 import '../../functions/locator_functions/geo_locator_current_pos.dart';
 
@@ -17,8 +18,11 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
       // 🎯 target acquired
       Position position = await determinePosition();
       // i know where you live 📌🗺️
-      final address = await GetAddress(position);
-      emit(AddressState(placemark: address));
+      final _address = await GetAddress(position);
+      emit(AddressState(
+          placemark: _address,
+          addresses: state.addresses,
+          isCurrentAddress: state.isCurrentAddress));
       // emit(
       //   AddressState(
       //     state: "${address.state}",
@@ -38,6 +42,20 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
           state: event.state,
           city: event.city,
           localArea: event.localAddress);
+      emit(state);
+    });
+    on<FetchAllAddress>((event, emit) async {
+      // final _addresses = await AddressFunctions.fetchAllAddresses();
+      final newState = AddressState(
+          placemark: state.placemark,
+          addresses: event.addressList,
+          isCurrentAddress: state.isCurrentAddress);
+      emit(newState);
+    });
+    on<ChangeDeliveryAddress>((event, emit) async {
+      // AddressFunctions.changeDeliveryAddress(
+      //   newAddress: event.address,
+      // );
       emit(state);
     });
   }

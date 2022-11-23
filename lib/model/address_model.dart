@@ -3,8 +3,8 @@ import 'dart:convert';
 class AddressModel {
   final String name;
   final String id;
-  final List<int> number;
-  final List<int> pincode;
+  final List number;
+  final List pincode;
   final String state;
   final String city;
   final String localArea;
@@ -31,7 +31,7 @@ class AddressModel {
   static AddressModel fromJson(Map<String, dynamic> json) => AddressModel(
         id: json['id'],
         name: json['name'],
-        number: json['number'],
+        number: (json['number']),
         pincode: json['pincode'],
         state: json['state'],
         city: json['city'],
