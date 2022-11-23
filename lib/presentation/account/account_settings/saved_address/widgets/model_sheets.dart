@@ -103,13 +103,33 @@ modalBottomSheetMenu(context) {
                   } else {
                     Navigator.pop(context);
                     log('Text valid');
-                    // BlocProvider.of<AddressBloc>(context).add(SaveAddress(
-                    //     name: name,
-                    //     number: number,
-                    //     pincode: pincode,
-                    //     state: state,
-                    //     city: city,
-                    //     localAddress: localAddress));
+                    BlocProvider.of<AddressBloc>(context).add(SaveAddress(
+                        name: name_ctr.text.trim().isEmpty
+                            ? 'no name given'
+                            : name_ctr.text.trim(),
+                        number: number_ctr.text.trim().isEmpty
+                            ? []
+                            : number_ctr.text
+                                .trim()
+                                .split('')
+                                .map(int.parse)
+                                .toList(),
+                        pincode: pincode_ctr.text.trim().isEmpty
+                            ? []
+                            : pincode_ctr.text
+                                .trim()
+                                .split('')
+                                .map(int.parse)
+                                .toList(),
+                        state: state_ctr.text.trim().isEmpty
+                            ? 'field was empty'
+                            : state_ctr.text.trim(),
+                        city: city_ctr.text.trim().isEmpty
+                            ? 'field was empty'
+                            : city_ctr.text.trim(),
+                        localAddress: localAddress_ctr.text.trim().isEmpty
+                            ? 'field was empty'
+                            : localAddress_ctr.text.trim()));
                   }
                 },
                 style: ElevatedButton.styleFrom(
