@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:razer/core/colors.dart';
 import 'package:razer/core/constents.dart';
+import 'package:razer/model/order_product_model.dart';
+import 'package:razer/model/product_model.dart';
+import 'package:razer/presentation/shop/order_summery/screen_order_summary.dart';
 
 class OrderedItems extends StatelessWidget {
   OrderedItems({
+    required this.orderedProduct,
     this.isCanceled = false,
     Key? key,
   }) : super(key: key);
   bool isCanceled;
+  OrderedProduct orderedProduct;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -27,7 +33,7 @@ class OrderedItems extends StatelessWidget {
                     width: 90,
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                          image: AssetImage('lib/assets/catogory_console.png')),
+                          image: NetworkImage('${orderedProduct.images[0]}')),
                       borderRadius: BorderRadius.circular(5),
                       color: Colors.black87,
                     ),
@@ -39,16 +45,27 @@ class OrderedItems extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   height_10,
-                  const SizedBox(
+                  SizedBox(
                     width: 290,
                     child: Text(
-                      'Charging Stand for Xbox Razer Limited Edition...',
-                      style: TextStyle(fontSize: 16),
-                      overflow: TextOverflow.clip,
+                      '${orderedProduct.name}',
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
-                  const Text(
-                    '\$ 199',
+                  height_5,
+                  SizedBox(
+                    width: 290,
+                    child: Text(
+                      '${orderedProduct.description}',
+                      style: TextStyle(fontSize: 14, color: Colors.white70),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                  height_10,
+                  Text(
+                    '\$ ${orderedProduct.price}',
                     style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
                   )
                 ],
@@ -59,18 +76,14 @@ class OrderedItems extends StatelessWidget {
             children: [
               Container(
                 height: 30,
-                width: 70,
+                width: 75,
                 margin: const EdgeInsets.all(15.0),
                 decoration: BoxDecoration(
                   border: Border.all(color: razergreen),
                   borderRadius: BorderRadius.circular(5),
                 ),
                 child: Row(children: [
-                  Text(' Qty: 1'),
-                  Icon(
-                    Icons.arrow_drop_down,
-                    color: razergreen,
-                  )
+                  Text(' Qty:   ${orderedProduct.orderQuantity}'),
                 ]),
               ),
               Spacer(),
@@ -91,10 +104,33 @@ class OrderedItems extends StatelessWidget {
           Row(
             children: [
               CustomButton(
-                text: 'Remove',
+                text: 'Cancel',
               ),
-              CustomButton(
-                text: 'Buy this again',
+              Expanded(
+                child: InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute<void>(
+                        builder: (BuildContext context) => ScreenOederSummery(
+                          product: Product(
+                              id: orderedProduct.id,
+                              name: orderedProduct.name,
+                              description: orderedProduct.description,
+                              spec: orderedProduct.spec,
+                              price: orderedProduct.price,
+                              quantity: orderedProduct.quantity,
+                              colors: orderedProduct.colors,
+                              rating: orderedProduct.rating,
+                              images: orderedProduct.images),
+                        ),
+                      ),
+                    );
+                  },
+                  child: CustomButton(
+                    text: 'Buy this again',
+                  ),
+                ),
               ),
             ],
           ),

@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:razer/core/colors.dart';
 import 'package:razer/core/constents.dart';
+import 'package:razer/model/order_product_model.dart';
 import 'package:razer/model/product_model.dart';
+import 'package:razer/presentation/shop/order_summery/widgets/item_count.dart';
+
+import '../../../../application/buying/buying_bloc.dart';
 
 class Item extends StatelessWidget {
   Item({
     Key? key,
     required this.product,
   }) : super(key: key);
-  Product product;
+  OrderedProduct product;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -59,21 +64,35 @@ class Item extends StatelessWidget {
           ),
           Row(
             children: [
-              Container(
-                height: 30,
-                width: 70,
-                margin: const EdgeInsets.all(15.0),
-                decoration: BoxDecoration(
-                  border: Border.all(color: razergreen),
-                  borderRadius: BorderRadius.circular(5),
+              GestureDetector(
+                onTap: () {
+                  try {
+                    itemCount(context);
+                  } on Exception catch (_) {
+                    return;
+                  }
+                  ;
+                },
+                child: Container(
+                  height: 30,
+                  width: 75,
+                  margin: const EdgeInsets.all(15.0),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: razergreen),
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  child: Row(children: [
+                    BlocBuilder<BuyingBloc, BuyingState>(
+                      builder: (context, state) {
+                        return Text(' Qty: ${state.buyingItem.orderQuantity}');
+                      },
+                    ),
+                    Icon(
+                      Icons.arrow_drop_down,
+                      color: razergreen,
+                    )
+                  ]),
                 ),
-                child: Row(children: [
-                  Text(' Qty: 1'),
-                  Icon(
-                    Icons.arrow_drop_down,
-                    color: razergreen,
-                  )
-                ]),
               ),
               Spacer(),
               Text(

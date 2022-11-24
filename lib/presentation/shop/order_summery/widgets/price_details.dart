@@ -35,7 +35,7 @@ class PriceDetails extends StatelessWidget {
               ),
               Spacer(),
               Text(
-                '\$ 199.99',
+                '\$ ${product.price}',
                 style: titleStyle_15,
               ),
               width_10
@@ -51,7 +51,7 @@ class PriceDetails extends StatelessWidget {
               ),
               Spacer(),
               Text(
-                '-\$ 0.99',
+                '-\$ 0.00',
                 style: TextStyle(fontSize: 15, color: razergreen),
               ),
               width_10
@@ -87,7 +87,7 @@ class PriceDetails extends StatelessWidget {
               ),
               Spacer(),
               Text(
-                '\$ 199.00',
+                '\$ ${product.price}',
                 style: TextStyle(
                     fontSize: 17,
                     color: Colors.white,

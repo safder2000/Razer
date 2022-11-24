@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:razer/application/buying/buying_bloc.dart';
+
 import 'package:razer/core/colors.dart';
 import 'package:razer/core/constents.dart';
+import 'package:razer/model/order_product_model.dart';
 import 'package:razer/model/product_model.dart';
 import 'package:razer/presentation/shop/order_summery/widgets/items.dart';
 import 'package:razer/presentation/shop/order_summery/widgets/price_details.dart';
 import 'package:razer/presentation/shop/payment/screen_payment.dart';
+
 import 'widgets/deliver_to.dart';
 
 class ScreenOederSummery extends StatelessWidget {
@@ -37,7 +40,17 @@ class ScreenOederSummery extends StatelessWidget {
           const DeliverTo(),
           height_10,
           Item(
-            product: product,
+            product: OrderedProduct(
+                id: product.id,
+                name: product.name,
+                description: product.description,
+                spec: product.spec,
+                price: product.price,
+                quantity: product.quantity,
+                colors: product.colors,
+                rating: product.rating,
+                images: product.images,
+                orderQuantity: 1),
           ),
           height_10,
           PriceDetails(
@@ -60,32 +73,47 @@ class ScreenOederSummery extends StatelessWidget {
                 ),
               ),
               Expanded(
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute<void>(
-                        builder: (BuildContext context) => ScreenPayment(
-                          product: product,
+                child: BlocBuilder<BuyingBloc, BuyingState>(
+                  builder: (context, state) {
+                    return GestureDetector(
+                      onTap: () {
+                        state.buyingItem = OrderedProduct(
+                            id: product.id,
+                            name: product.name,
+                            description: product.description,
+                            spec: product.spec,
+                            price: product.price,
+                            quantity: product.quantity,
+                            colors: product.colors,
+                            rating: product.rating,
+                            images: product.images,
+                            orderQuantity: state.buyingItem.orderQuantity);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute<void>(
+                            builder: (BuildContext context) => ScreenPayment(
+                              product: product,
+                            ),
+                          ),
+                        );
+                      },
+                      child: Container(
+                        height: 50,
+                        decoration: BoxDecoration(
+                            color: theAmber,
+                            borderRadius: BorderRadius.circular(8)),
+                        child: const Center(
+                          child: Text(
+                            'Continue',
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold),
+                          ),
                         ),
                       ),
                     );
                   },
-                  child: Container(
-                    height: 50,
-                    decoration: BoxDecoration(
-                        color: theAmber,
-                        borderRadius: BorderRadius.circular(8)),
-                    child: const Center(
-                      child: Text(
-                        'Continue',
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                  ),
                 ),
               )
             ],

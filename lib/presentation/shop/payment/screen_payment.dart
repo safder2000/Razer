@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:razer/core/colors.dart';
 import 'package:razer/core/constents.dart';
 import 'package:razer/functions/order_functions/order_functions.dart';
+import 'package:razer/model/order_product_model.dart';
 import 'package:razer/model/product_model.dart';
 import 'package:razer/presentation/shop/payment/track_order.dart';
+
+import '../../../application/buying/buying_bloc.dart';
 
 class ScreenPayment extends StatelessWidget {
   ScreenPayment({super.key, required this.product});
@@ -94,32 +99,43 @@ class ScreenPayment extends StatelessWidget {
                       ),
                     );
                   },
-                  child: GestureDetector(
-                    onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute<void>(
-                        builder: (BuildContext context) {
-                          OrderFunctions.addToCart(
-                              product: product, quantinty: 1);
-                          return TrackOrder();
+                  child: BlocBuilder<BuyingBloc, BuyingState>(
+                    builder: (context, state) {
+                      return GestureDetector(
+                        onTap: () {
+                          OrderFunctions.addToOrder(
+                            product: product,
+                            quantinty: int.parse(
+                                state.buyingItem.orderQuantity.toString()),
+                          );
+                          // BlocProvider.of<BuyingBloc>(context)
+                          //     .add(AddToOrders());
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute<void>(
+                              builder: (BuildContext context) {
+                                return TrackOrder();
+                              },
+                            ),
+                          );
                         },
-                      ),
-                    ),
-                    child: Container(
-                      height: 50,
-                      decoration: BoxDecoration(
-                          color: theAmber,
-                          borderRadius: BorderRadius.circular(8)),
-                      child: const Center(
-                        child: Text(
-                          ' Pay ',
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold),
+                        child: Container(
+                          height: 50,
+                          decoration: BoxDecoration(
+                              color: theAmber,
+                              borderRadius: BorderRadius.circular(8)),
+                          child: const Center(
+                            child: Text(
+                              ' Pay ',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
+                      );
+                    },
                   ),
                 ),
               )

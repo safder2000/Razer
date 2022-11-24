@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:razer/core/colors.dart';
 import 'package:razer/core/constents.dart';
+import 'package:razer/functions/cart_fn.dart';
+import 'package:razer/model/product_model.dart';
+import 'package:razer/presentation/utils/utils.dart';
 
 class WishlistItemWidget extends StatelessWidget {
   WishlistItemWidget({
     this.isUnavailable = false,
+    required this.product,
     Key? key,
   }) : super(key: key);
   bool isUnavailable;
+  Product product;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -17,11 +22,11 @@ class WishlistItemWidget extends StatelessWidget {
           Stack(
             children: [
               Container(
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
                   color: Color.fromARGB(27, 255, 255, 255),
                   image: DecorationImage(
                     fit: BoxFit.fitHeight,
-                    image: AssetImage('lib/assets/catogory_other.png'),
+                    image: NetworkImage(product.images[0]),
                   ),
                 ),
                 height: 150,
@@ -57,7 +62,7 @@ class WishlistItemWidget extends StatelessWidget {
                   children: [
                     SizedBox(
                       child: Text(
-                        'Razer Blade 14 - Full HD 144Hz - GeForce RTX 3060 - Black',
+                        '${product.name}',
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
@@ -65,7 +70,7 @@ class WishlistItemWidget extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          'USD \$2435',
+                          'USD \$${product.price}',
                           style: TextStyle(
                               color: razergreen,
                               fontSize: 14,
@@ -74,23 +79,32 @@ class WishlistItemWidget extends StatelessWidget {
                       ],
                     ),
                     Spacer(),
-                    Container(
-                      height: 32,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(7),
-                        border: Border.all(
-                            color: isUnavailable
-                                ? Colors.white30
-                                : Colors.white70),
-                      ),
-                      child: Center(
-                        child: Text(
-                          'Add to Cart',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
+                    InkWell(
+                      onTap: () {
+                        addToCart(product: product);
+                        Utils.showSnackBar(
+                            context: context,
+                            text: 'Added to Cart',
+                            color: justgreen);
+                      },
+                      child: Container(
+                        height: 32,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(7),
+                          border: Border.all(
                               color: isUnavailable
                                   ? Colors.white30
-                                  : Colors.white),
+                                  : Colors.white70),
+                        ),
+                        child: Center(
+                          child: Text(
+                            'Add to Cart',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: isUnavailable
+                                    ? Colors.white30
+                                    : Colors.white),
+                          ),
                         ),
                       ),
                     ),

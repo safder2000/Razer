@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:razer/core/colors.dart';
+import 'package:razer/core/constents.dart';
 import 'package:razer/functions/cart_fn.dart';
 
 import 'package:razer/model/product_model.dart';
@@ -40,10 +41,13 @@ class ScreenCart extends StatelessWidget {
                         'https://shop.millenniumbooksource.com/static/images/cart1.png')),
               )));
             } else if (products.isNotEmpty) {
-              return ListView.builder(
+              return ListView.separated(
                 itemBuilder: (BuildContext, index) =>
                     CartItemWidget(product: products[index]),
                 itemCount: products.length,
+                separatorBuilder: (BuildContext context, int index) {
+                  return height_10;
+                },
               );
             } else {
               return const Center(child: Text('unknown error'));

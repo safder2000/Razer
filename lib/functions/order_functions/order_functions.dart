@@ -7,7 +7,7 @@ import '../../model/product_model.dart';
 class OrderFunctions {
   static final email = FirebaseAuth.instance.currentUser!.email;
 
-  static Future addToCart({
+  static Future addToOrder({
     required Product product,
     required int quantinty,
   }) async {
@@ -16,6 +16,12 @@ class OrderFunctions {
         .doc(email)
         .collection('orders')
         .doc(product.id);
+
+    final totalOrders = FirebaseFirestore.instance
+        .collection('orders')
+        .doc('products')
+        .collection(product.id)
+        .doc();
 
     final orderedProduct = OrderedProduct(
         id: product.id,
@@ -29,6 +35,20 @@ class OrderFunctions {
         images: product.images,
         orderQuantity: quantinty);
     final json = orderedProduct.toJson();
+    Map<String, dynamic> count = {
+      'id': totalOrders.id,
+      'count': quantinty,
+    };
     await docUser.set(json);
+    await totalOrders.set(count);
   }
+
+  static Stream<List<OrderedProduct>> readOrders() => FirebaseFirestore.instance
+      .collection('users')
+      .doc(email)
+      .collection('orders')
+      .snapshots()
+      .map((snapshot) => snapshot.docs
+          .map((doc) => OrderedProduct.fromJson(doc.data()))
+          .toList());
 }
