@@ -7,7 +7,8 @@ import 'package:razer/functions/order_functions/order_functions.dart';
 import 'package:razer/model/order_product_model.dart';
 import 'package:razer/model/product_model.dart';
 import 'package:razer/presentation/shop/payment/track_order.dart';
-
+import 'package:razer/presentation/shop/screen_shop.dart';
+import 'package:razorpay_flutter/razorpay_flutter.dart';
 import '../../../application/buying/buying_bloc.dart';
 
 class ScreenPayment extends StatelessWidget {
@@ -110,14 +111,31 @@ class ScreenPayment extends StatelessWidget {
                           );
                           // BlocProvider.of<BuyingBloc>(context)
                           //     .add(AddToOrders());
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute<void>(
-                              builder: (BuildContext context) {
-                                return TrackOrder();
-                              },
-                            ),
-                          );
+                          Razorpay razorpay = Razorpay();
+                          var options = {
+                            'key': 'rzp_live_ILgsfZCZoFIKMb',
+                            'amount': 100,
+                            'name': 'Acme Corp.',
+                            'description': 'Fine T-Shirt',
+                            'retry': {'enabled': true, 'max_count': 1},
+                            'send_sms_hash': true,
+                            'prefill': {
+                              'contact': '8888888888',
+                              'email': 'test@razorpay.com'
+                            },
+                            'external': {
+                              'wallets': ['paytm']
+                            }
+                          };
+                          razorpay.on(Razorpay.EVENT_PAYMENT_ERROR,
+                              handlePaymentErrorResponse);
+                          razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS,
+                              handlePaymentSuccessResponse);
+                          razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET,
+                              handleExternalWalletSelected);
+                          razorpay.open(options);
+
+                          // orderPlacedAlert(context);
                         },
                         child: Container(
                           height: 50,
@@ -159,6 +177,112 @@ class ScreenPayment extends StatelessWidget {
           style: titleStyle_16,
         )
       ],
+    );
+  }
+
+  static orderPlacedAlert(BuildContext context) {
+    // set up the button
+    Widget toShop = TextButton(
+      child: Text("Shop again"),
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute<void>(
+            builder: (BuildContext context) {
+              return TrackOrder();
+            },
+          ),
+        );
+      },
+    );
+    Widget toTrack = TextButton(
+      child: Text("Track Order"),
+      onPressed: () {
+        Navigator.pop(context);
+
+        Navigator.push(
+          context,
+          MaterialPageRoute<void>(
+            builder: (BuildContext context) {
+              return ScreenShop(
+                catogory: 'all',
+              );
+            },
+          ),
+        );
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      backgroundColor: Color.fromARGB(255, 46, 46, 46),
+      content: const Text(
+        "Your Order has been placed.",
+        style: TextStyle(fontSize: 20, color: Colors.white),
+      ),
+      actions: [
+        toShop,
+        toTrack,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+  void handlePaymentSuccessResponse(PaymentSuccessResponse response, context) {
+    orderPlacedAlert(context);
+    /*
+    * Payment Success Response contains three values:
+    * 1. Order ID
+    * 2. Payment ID
+    * 3. Signature
+    * */
+    showAlertDialog(
+        context, "Payment Successful", "Payment ID: ${response.paymentId}");
+  }
+
+  void handlePaymentErrorResponse(PaymentFailureResponse response, context) {
+    /*
+    * PaymentFailureResponse contains three values:
+    * 1. Error Code
+    * 2. Error Description
+    * 3. Metadata
+    * */
+    showAlertDialog(context, "Payment Failed",
+        "Code: ${response.code}\nDescription: ${response.message}\nMetadata:${response.error.toString()}");
+  }
+
+  void handleExternalWalletSelected(ExternalWalletResponse response, context) {
+    showAlertDialog(
+        context, "External Wallet Selected", "${response.walletName}");
+  }
+
+  void showAlertDialog(BuildContext context, String title, String message) {
+    // set up the buttons
+    Widget continueButton = ElevatedButton(
+      child: const Text("Continue"),
+      onPressed: () {},
+    );
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text(title),
+      content: Text(message),
+      actions: [
+        continueButton,
+      ],
+    );
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
     );
   }
 }

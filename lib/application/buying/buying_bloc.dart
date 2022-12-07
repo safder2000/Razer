@@ -16,17 +16,20 @@ class BuyingBloc extends Bloc<BuyingEvent, BuyingState> {
       emit(
         BuyingState(
           buyingItem: OrderedProduct(
-            id: state.buyingItem.id,
-            name: state.buyingItem.name,
-            description: state.buyingItem.description,
-            spec: state.buyingItem.spec,
-            price: state.buyingItem.price,
-            quantity: state.buyingItem.quantity,
-            colors: state.buyingItem.colors,
-            rating: state.buyingItem.rating,
-            images: state.buyingItem.images,
-            orderQuantity: state.buyingItem.orderQuantity + 1,
-          ),
+              id: state.buyingItem.id,
+              name: state.buyingItem.name,
+              description: state.buyingItem.description,
+              spec: state.buyingItem.spec,
+              price: state.buyingItem.price,
+              quantity: state.buyingItem.quantity,
+              colors: state.buyingItem.colors,
+              rating: state.buyingItem.rating,
+              images: state.buyingItem.images,
+              orderQuantity: state.buyingItem.orderQuantity + 1,
+              isCanceled: false,
+              isDeliverd: false,
+              user: state.buyingItem.user,
+              time: state.buyingItem.time),
         ),
       );
     });
@@ -46,6 +49,10 @@ class BuyingBloc extends Bloc<BuyingEvent, BuyingState> {
             orderQuantity: state.buyingItem.orderQuantity <= 1
                 ? state.buyingItem.orderQuantity
                 : state.buyingItem.orderQuantity - 1,
+            isCanceled: false,
+            isDeliverd: false,
+            user: state.buyingItem.user,
+            time: state.buyingItem.time,
           ),
         ),
       );
@@ -70,6 +77,10 @@ class BuyingBloc extends Bloc<BuyingEvent, BuyingState> {
             rating: state.buyingItem.rating,
             images: state.buyingItem.images,
             orderQuantity: state.buyingItem.orderQuantity,
+            isCanceled: false,
+            isDeliverd: false,
+            user: state.buyingItem.user,
+            time: state.buyingItem.time,
           ),
         ),
       );

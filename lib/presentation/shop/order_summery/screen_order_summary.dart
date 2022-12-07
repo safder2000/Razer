@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:razer/application/buying/buying_bloc.dart';
@@ -18,6 +19,8 @@ class ScreenOederSummery extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final email = FirebaseAuth.instance.currentUser!.email;
+
     return Scaffold(
       appBar: AppBar(
           backgroundColor: Colors.black,
@@ -50,7 +53,11 @@ class ScreenOederSummery extends StatelessWidget {
                 colors: product.colors,
                 rating: product.rating,
                 images: product.images,
-                orderQuantity: 1),
+                orderQuantity: 1,
+                user: email!,
+                isCanceled: false,
+                isDeliverd: false,
+                time: 'time'),
           ),
           height_10,
           PriceDetails(
@@ -87,7 +94,11 @@ class ScreenOederSummery extends StatelessWidget {
                             colors: product.colors,
                             rating: product.rating,
                             images: product.images,
-                            orderQuantity: state.buyingItem.orderQuantity);
+                            orderQuantity: state.buyingItem.orderQuantity,
+                            user: email,
+                            isCanceled: false,
+                            isDeliverd: false,
+                            time: state.buyingItem.time);
                         Navigator.push(
                           context,
                           MaterialPageRoute<void>(

@@ -20,6 +20,10 @@ class InitialState extends BuyingState {
               colors: [],
               rating: 0,
               images: [],
-              orderQuantity: 1),
+              orderQuantity: 1,
+              isCanceled: false,
+              isDeliverd: false,
+              user: '',
+              time: ''),
         );
 }

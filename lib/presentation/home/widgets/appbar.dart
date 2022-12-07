@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:razer/core/colors.dart';
-import 'package:razer/presentation/search/search_screen.dart';
+import 'package:razer/presentation/search/screen_search.dart';
 
 class HomeAppBarWidget extends StatelessWidget {
   const HomeAppBarWidget({
@@ -29,7 +29,7 @@ class HomeAppBarWidget extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute<void>(
-                      builder: (BuildContext context) => SearchScreen(),
+                      builder: (BuildContext context) => ScreenSearch(),
                     ),
                   );
                 },

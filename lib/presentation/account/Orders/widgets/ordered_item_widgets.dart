@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:razer/application/Order/order_bloc.dart';
 import 'package:razer/core/colors.dart';
 import 'package:razer/core/constents.dart';
 import 'package:razer/model/order_product_model.dart';
@@ -8,16 +10,17 @@ import 'package:razer/presentation/shop/order_summery/screen_order_summary.dart'
 class OrderedItems extends StatelessWidget {
   OrderedItems({
     required this.orderedProduct,
-    this.isCanceled = false,
     Key? key,
   }) : super(key: key);
-  bool isCanceled;
   OrderedProduct orderedProduct;
 
   @override
   Widget build(BuildContext context) {
+    bool isCanceled = orderedProduct.isCanceled;
+    bool isDeliverd = orderedProduct.isDeliverd;
+
     return Container(
-      color: Colors.white12,
+      color: isDeliverd || isCanceled ? Colors.white24 : Colors.white12,
       height: 220,
       child: Column(
         children: [
@@ -64,10 +67,19 @@ class OrderedItems extends StatelessWidget {
                     ),
                   ),
                   height_10,
-                  Text(
-                    '\$ ${orderedProduct.price}',
-                    style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
-                  )
+                  isCanceled || isDeliverd
+                      ? Text(
+                          '\$ ${orderedProduct.price}',
+                          style: TextStyle(
+                              fontSize: 17,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white54),
+                        )
+                      : Text(
+                          '\$ ${orderedProduct.price}',
+                          style: TextStyle(
+                              fontSize: 17, fontWeight: FontWeight.bold),
+                        )
                 ],
               ),
             ],
@@ -92,10 +104,15 @@ class OrderedItems extends StatelessWidget {
                       'Order Canceled ',
                       style: TextStyle(color: theAmber, fontSize: 13),
                     )
-                  : Text(
-                      'Devilvery by Sun Nov 6',
-                      style: TextStyle(color: Colors.white70, fontSize: 13),
-                    ),
+                  : isDeliverd
+                      ? Text(
+                          'Order Devilverd',
+                          style: TextStyle(color: justgreen, fontSize: 13),
+                        )
+                      : Text(
+                          '',
+                          style: TextStyle(color: justgreen, fontSize: 13),
+                        ),
               width_10,
               width_10,
             ],
@@ -103,9 +120,22 @@ class OrderedItems extends StatelessWidget {
           Spacer(),
           Row(
             children: [
-              CustomButton(
-                text: 'Cancel',
-              ),
+              isCanceled || isDeliverd
+                  ? CustomButton(text: 'Cancel', color: Colors.white54)
+                  : Expanded(
+                      child: InkWell(
+                        onTap: () {
+                          BlocProvider.of<OrderBloc>(context).add(
+                            CancelOrder(
+                                time: orderedProduct.time,
+                                productID: orderedProduct.id),
+                          );
+                        },
+                        child: CustomButton(
+                          text: 'Cancel',
+                        ),
+                      ),
+                    ),
               Expanded(
                 child: InkWell(
                   onTap: () {
@@ -143,9 +173,11 @@ class OrderedItems extends StatelessWidget {
 class CustomButton extends StatelessWidget {
   CustomButton({
     required this.text,
+    this.color = Colors.white,
     Key? key,
   }) : super(key: key);
   String text;
+  Color color;
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -155,7 +187,8 @@ class CustomButton extends StatelessWidget {
         child: Center(
           child: Text(
             text,
-            style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+            style: TextStyle(
+                fontSize: 15, fontWeight: FontWeight.bold, color: color),
           ),
         ),
       ),

@@ -44,19 +44,31 @@ class ScreenWishlist extends StatelessWidget {
                     childAspectRatio: 8 / 10,
                   ),
                   itemBuilder: (BuildContext context, int index) {
-                    return WishlistItemWidget(
-                      product: _product[index],
+                    return InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute<void>(
+                            builder: (BuildContext context) => ScreenBuyItem(
+                              product: _product[index],
+                            ),
+                          ),
+                        );
+                      },
+                      child: WishlistItemWidget(
+                        product: _product[index],
+                      ),
                     );
                   },
 
                   // GestureDetector(
                   //     onTap: () {
-                  //       // Navigator.push(
-                  //       //   context,
-                  //       //   MaterialPageRoute<void>(
-                  //       //     builder: (BuildContext context) => ScreenBuyItem(),
-                  //       //   ),
-                  //       // );
+                  //       Navigator.push(
+                  //         context,
+                  //         MaterialPageRoute<void>(
+                  //           builder: (BuildContext context) => ScreenBuyItem(),
+                  //         ),
+                  //       );
                   //     },
                   //     child: WishlistItemWidget()),
                 ),
