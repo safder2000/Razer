@@ -236,6 +236,50 @@ class ScreenPayment extends StatelessWidget {
     );
   }
 
+  static orderFailed(BuildContext context) {
+    // set up the button
+    Widget toShop = TextButton(
+      child: Text("Shop again"),
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute<void>(
+            builder: (BuildContext context) {
+              return TrackOrder();
+            },
+          ),
+        );
+      },
+    );
+    Widget toTrack = TextButton(
+      child: Text("Retry"),
+      onPressed: () {
+        Navigator.pop(context);
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      backgroundColor: Color.fromARGB(255, 46, 46, 46),
+      content: const Text(
+        "Payment Faild.",
+        style: TextStyle(fontSize: 20, color: Colors.white),
+      ),
+      actions: [
+        toShop,
+        toTrack,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
   void handlePaymentSuccessResponse(PaymentSuccessResponse response, context) {
     orderPlacedAlert(context);
     /*

@@ -7,9 +7,9 @@
     "@hello":{
         "description":"greeting"
         },
-        "savedAdresses":"saved  Adresses",
-    "@savedAdresses":{
-        "description":"savedAdresses"
+        "savedAddresses":"Saved Addresses",
+    "@savedAddresses":{
+        "description":"Saved Addresses"
         }
         
         

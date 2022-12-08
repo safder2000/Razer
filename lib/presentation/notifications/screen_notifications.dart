@@ -100,7 +100,7 @@ class ScreenNotifications extends StatelessWidget {
         style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
       ),
       onPressed: () {
-        notificationOpened(id: id);
+        deleteNotification(id: id);
         Navigator.pop(context);
       },
     );

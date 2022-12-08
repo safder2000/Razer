@@ -7,21 +7,83 @@ import 'package:razer/application/cart/cart_bloc.dart';
 import 'package:razer/core/colors.dart';
 import 'package:razer/core/constents.dart';
 import 'package:razer/functions/order_functions/order_functions.dart';
+
 import 'package:razer/functions/wishlist_functions.dart';
 import 'package:razer/model/product_model.dart';
 import 'package:razer/presentation/cart/screen_cart.dart';
 import 'package:razer/presentation/shop/order_summery/screen_order_summary.dart';
-import 'package:razer/presentation/shop/payment/track_order.dart';
-import 'package:razer/presentation/shop/screen_shop.dart';
+
+import 'package:razer/presentation/shop/widgets/alertboxes.dart';
+import 'package:razer/presentation/shop/widgets/buttons.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 import '../../application/buying/buying_bloc.dart';
 
-class ScreenBuyItem extends StatelessWidget {
+class ScreenBuyItem extends StatefulWidget {
   ScreenBuyItem({super.key, required this.product});
   Product product;
+
+  @override
+  State<ScreenBuyItem> createState() => _ScreenBuyItemState();
+}
+
+class _ScreenBuyItemState extends State<ScreenBuyItem> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    void _handlePaymentSuccess(PaymentSuccessResponse response) {
+      showAlertBox(
+          context: context,
+          button1: AlertButtons.returnToShop(context),
+          button2: AlertButtons.trackOrder(context),
+          content: "Your Order has been placed.");
+      num quantity =
+          BlocProvider.of<BuyingBloc>(context).state.buyingItem.orderQuantity;
+      OrderFunctions.addToOrder(
+          product: widget.product, quantinty: quantity.toInt());
+      // Do something when payment succeeds
+    }
+
+    void _handlePaymentError(PaymentFailureResponse response) {
+      showAlertBox(
+          context: context,
+          button1: AlertButtons.returnToShop(context),
+          button2: AlertButtons.retry(context),
+          content: "Payment has been failed");
+      // Do something when payment fails
+    }
+
+    void _handleExternalWallet(ExternalWalletResponse response) {
+      showAlertBox(
+          context: context,
+          button1: AlertButtons.returnToShop(context),
+          button2: AlertButtons.retry(context),
+          content: "Select an external wallet");
+      // Do something when an external wallet was selected
+    }
+
+    razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
+    razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
+    razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
+  }
+
+  Razorpay razorpay = Razorpay();
   @override
   Widget build(BuildContext context) {
+    var options = {
+      'key': 'rzp_test_DYS7TJEsb2indp',
+      'amount': 100,
+      'name': 'Acme Corp.',
+      'description': 'Demo',
+      // 'retry': {'enabled': true, 'max_count': 1},
+      // 'send_sms_hash': true,
+      'prefill': {'contact': '8888888888', 'email': 'test@razorpay.com'},
+      'external': {
+        'wallets': ['paytm']
+      }
+    };
+
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -50,18 +112,18 @@ class ScreenBuyItem extends StatelessWidget {
             height: 250,
             child: CarouselSlider(
               options: CarouselOptions(height: 400.0),
-              items: product.images.map((i) {
+              items: widget.product.images.map((i) {
                 return ListView.separated(
                   scrollDirection: Axis.horizontal,
                   // physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-                  itemCount: product.images.length,
+                  itemCount: widget.product.images.length,
                   itemBuilder: (BuildContext context, int index) =>
                       imageContainer(
                     context,
-                    product.images[index],
+                    widget.product.images[index],
                     index,
-                    product.images.length,
+                    widget.product.images.length,
                   ),
                   separatorBuilder: (BuildContext context, int index) =>
                       SizedBox(
@@ -81,7 +143,7 @@ class ScreenBuyItem extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20.0),
                   child: Text(
-                    product.name,
+                    widget.product.name,
                     overflow: TextOverflow.clip,
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
@@ -96,10 +158,10 @@ class ScreenBuyItem extends StatelessWidget {
                           for (Product element in _product) {
                             ids.add(element.id);
                           }
-                          if (ids.contains(product.id)) {
+                          if (ids.contains(widget.product.id)) {
                             return IconButton(
                                 onPressed: () {
-                                  removeFromWishlist(id: product.id);
+                                  removeFromWishlist(id: widget.product.id);
                                 },
                                 icon: Icon(
                                   Icons.favorite,
@@ -108,7 +170,7 @@ class ScreenBuyItem extends StatelessWidget {
                           } else {
                             return IconButton(
                                 onPressed: () {
-                                  addToWishlist(product: product);
+                                  addToWishlist(product: widget.product);
                                 },
                                 icon: Icon(
                                   Icons.favorite,
@@ -118,7 +180,7 @@ class ScreenBuyItem extends StatelessWidget {
                         } else {
                           return IconButton(
                               onPressed: () {
-                                addToWishlist(product: product);
+                                addToWishlist(product: widget.product);
                               },
                               icon: Icon(
                                 Icons.favorite,
@@ -128,7 +190,7 @@ class ScreenBuyItem extends StatelessWidget {
                       } else {
                         return IconButton(
                             onPressed: () {
-                              addToWishlist(product: product);
+                              addToWishlist(product: widget.product);
                             },
                             icon: Icon(
                               Icons.favorite,
@@ -146,7 +208,7 @@ class ScreenBuyItem extends StatelessWidget {
             child: SizedBox(
               width: MediaQuery.of(context).size.width * 0.93,
               child: Text(
-                product.description,
+                widget.product.description,
                 overflow: TextOverflow.clip,
                 style: TextStyle(fontSize: 14, color: Colors.white70),
               ),
@@ -159,7 +221,7 @@ class ScreenBuyItem extends StatelessWidget {
             color: Colors.white10,
             child: Center(
               child: Text(
-                'US  \$${product.price}',
+                'US  \$${widget.product.price}',
                 style: TextStyle(
                     fontSize: 17,
                     fontWeight: FontWeight.bold,
@@ -173,8 +235,8 @@ class ScreenBuyItem extends StatelessWidget {
               Expanded(
                 child: GestureDetector(
                   onTap: () {
-                    BlocProvider.of<CartBloc>(context)
-                        .add(AddToCart(product: product, context: context));
+                    BlocProvider.of<CartBloc>(context).add(
+                        AddToCart(product: widget.product, context: context));
                   },
                   child: Container(
                     height: 60,
@@ -207,35 +269,8 @@ class ScreenBuyItem extends StatelessWidget {
                     builder: (context, state) {
                       return GestureDetector(
                         onTap: () {
-                          OrderFunctions.addToOrder(
-                            product: product,
-                            quantinty: int.parse(
-                                state.buyingItem.orderQuantity.toString()),
-                          );
                           // BlocProvider.of<BuyingBloc>(context)
                           //     .add(AddToOrders());
-                          Razorpay razorpay = Razorpay();
-                          var options = {
-                            'key': 'rzp_test_DYS7TJEsb2indp',
-                            'amount': 100,
-                            'name': 'Acme Corp.',
-                            'description': 'Fine T-Shirt',
-                            'retry': {'enabled': true, 'max_count': 1},
-                            'send_sms_hash': true,
-                            'prefill': {
-                              'contact': '8888888888',
-                              'email': 'test@razorpay.com'
-                            },
-                            'external': {
-                              'wallets': ['paytm']
-                            }
-                          };
-                          razorpay.on(Razorpay.EVENT_PAYMENT_ERROR,
-                              handlePaymentErrorResponse);
-                          razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS,
-                              handlePaymentSuccessResponse);
-                          razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET,
-                              handleExternalWalletSelected);
                           razorpay.open(options);
 
                           // orderPlacedAlert(context);
@@ -293,65 +328,17 @@ class ScreenBuyItem extends StatelessWidget {
       )
     ]);
   }
-  //========================== update
-
-  static orderPlacedAlert(BuildContext context) {
-    // set up the button
-    Widget toShop = TextButton(
-      child: Text("Shop again"),
-      onPressed: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute<void>(
-            builder: (BuildContext context) {
-              return TrackOrder();
-            },
-          ),
-        );
-      },
-    );
-    Widget toTrack = TextButton(
-      child: Text("Track Order"),
-      onPressed: () {
-        Navigator.pop(context);
-
-        Navigator.push(
-          context,
-          MaterialPageRoute<void>(
-            builder: (BuildContext context) {
-              return ScreenShop(
-                catogory: 'all',
-              );
-            },
-          ),
-        );
-      },
-    );
-
-    // set up the AlertDialog
-    AlertDialog alert = AlertDialog(
-      backgroundColor: Color.fromARGB(255, 46, 46, 46),
-      content: const Text(
-        "Your Order has been placed.",
-        style: TextStyle(fontSize: 20, color: Colors.white),
-      ),
-      actions: [
-        toShop,
-        toTrack,
-      ],
-    );
-
-    // show the dialog
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
-  }
 
   void handlePaymentSuccessResponse(PaymentSuccessResponse response, context) {
-    orderPlacedAlert(context);
+    // orderPlacedAlert(context);
+    Navigator.push(
+      context,
+      MaterialPageRoute<void>(
+        builder: (BuildContext context) => ScreenOederSummery(
+          product: widget.product,
+        ),
+      ),
+    );
     /*
     * Payment Success Response contains three values:
     * 1. Order ID

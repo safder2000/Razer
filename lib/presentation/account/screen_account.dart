@@ -287,7 +287,9 @@ class ScreenAccount extends StatelessWidget {
           height_10,
           languageTile(lang: 'Malayalam'),
           height_10,
-          languageTile(lang: 'Hindi'),
+          GestureDetector(
+              // onTap: () => ScreenAccount.of(context).setLocale(Locale.fromSubtags(languageCode: 'hi')),
+              child: languageTile(lang: 'Hindi')),
         ],
       ),
       actions: [

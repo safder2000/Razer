@@ -18,7 +18,6 @@ import 'package:razer/application/shop/shop_bloc.dart';
 import 'package:razer/l10n/l10n.dart';
 import 'package:razer/presentation/auth/auth_page.dart';
 import 'package:flutter_gen/gen_l10n/app-localizations.dart';
-import 'package:flutter_gen/gen_l10n/app-localizations.dart';
 
 // const AndroidNotificationChannel channel = AndroidNotificationChannel(
 //     'high_importance_channel', // id
