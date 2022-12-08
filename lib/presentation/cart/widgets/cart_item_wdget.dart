@@ -18,7 +18,7 @@ class CartItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white12,
-      height: 220,
+      height: 180,
       child: Column(
         children: [
           Row(

@@ -10,6 +10,7 @@ import 'package:razer/presentation/shop/payment/track_order.dart';
 import 'package:razer/presentation/shop/screen_shop.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import '../../../application/buying/buying_bloc.dart';
+import '../../../notifications/notification_api.dart';
 
 class ScreenPayment extends StatelessWidget {
   ScreenPayment({super.key, required this.product});
@@ -113,7 +114,7 @@ class ScreenPayment extends StatelessWidget {
                           //     .add(AddToOrders());
                           Razorpay razorpay = Razorpay();
                           var options = {
-                            'key': 'rzp_live_ILgsfZCZoFIKMb',
+                            'key': 'rzp_test_DYS7TJEsb2indp',
                             'amount': 100,
                             'name': 'Acme Corp.',
                             'description': 'Fine T-Shirt',

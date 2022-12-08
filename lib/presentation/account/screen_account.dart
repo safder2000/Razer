@@ -17,6 +17,7 @@ import 'package:razer/presentation/account/widgets/account_boxes_widget.dart';
 import 'package:razer/presentation/account/widgets/account_settings_widgets.dart';
 import 'package:razer/presentation/account/wishlist/screen_wishlist.dart';
 import 'package:razer/presentation/widgets/appbar_widget.dart';
+import 'package:flutter_gen/gen_l10n/app-localizations.dart';
 
 class ScreenAccount extends StatelessWidget {
   const ScreenAccount({super.key});
@@ -177,20 +178,20 @@ class ScreenAccount extends StatelessWidget {
                     title: 'Edit Profile',
                   ),
                 ),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute<void>(
-                        builder: (BuildContext context) => const CardsNWallet(),
-                      ),
-                    );
-                  },
-                  child: AccountSettingsWidgets(
-                    ico: Icons.account_balance_wallet_outlined,
-                    title: 'Saved Cards & Wallet',
-                  ),
-                ),
+                // GestureDetector(
+                //   onTap: () {
+                //     Navigator.push(
+                //       context,
+                //       MaterialPageRoute<void>(
+                //         builder: (BuildContext context) => const CardsNWallet(),
+                //       ),
+                //     );
+                //   },
+                //   child: AccountSettingsWidgets(
+                //     ico: Icons.account_balance_wallet_outlined,
+                //     title: 'Saved Cards & Wallet',
+                //   ),
+                // ),
                 GestureDetector(
                   onTap: () {
                     Navigator.push(
@@ -202,7 +203,7 @@ class ScreenAccount extends StatelessWidget {
                   },
                   child: AccountSettingsWidgets(
                     ico: Icons.location_on_outlined,
-                    title: 'Saved Adresses',
+                    title: 'Saved  Adresses',
                   ),
                 ),
                 GestureDetector(
@@ -211,24 +212,24 @@ class ScreenAccount extends StatelessWidget {
                   },
                   child: AccountSettingsWidgets(
                     ico: Icons.language_outlined,
-                    title: 'Select Language',
+                    title: AppLocalizations.of(context)!.language,
                   ),
                 ),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute<void>(
-                        builder: (BuildContext context) =>
-                            const NotificationSettings(),
-                      ),
-                    );
-                  },
-                  child: AccountSettingsWidgets(
-                    ico: Icons.notifications_active_outlined,
-                    title: 'Notification Settings',
-                  ),
-                ),
+                // GestureDetector(
+                //   onTap: () {
+                //     Navigator.push(
+                //       context,
+                //       MaterialPageRoute<void>(
+                //         builder: (BuildContext context) =>
+                //             const NotificationSettings(),
+                //       ),
+                //     );
+                //   },
+                //   child: AccountSettingsWidgets(
+                //     ico: Icons.notifications_active_outlined,
+                //     title: 'Notification Settings',
+                //   ),
+                // ),
               ],
             ),
           ),

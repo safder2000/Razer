@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:razer/core/colors.dart';
 import 'package:razer/presentation/search/screen_search.dart';
 
+import '../../../notifications/notification_api.dart';
+
 class HomeAppBarWidget extends StatelessWidget {
   const HomeAppBarWidget({
     Key? key,
@@ -32,6 +34,19 @@ class HomeAppBarWidget extends StatelessWidget {
                       builder: (BuildContext context) => ScreenSearch(),
                     ),
                   );
+                },
+                icon: const Icon(
+                  Icons.search,
+                  color: razergreen,
+                  size: 28,
+                )),
+            IconButton(
+                onPressed: () {
+                  NotificationApi.showNotification(
+                      // title: 'msg title',
+                      // body: 'msg body',
+                      // payload: 'gg',
+                      );
                 },
                 icon: const Icon(
                   Icons.search,
