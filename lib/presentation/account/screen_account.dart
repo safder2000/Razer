@@ -33,7 +33,7 @@ class ScreenAccount extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.black,
         title: Text(
-          'My Account',
+          AppLocalizations.of(context)!.myAccount,
           style: TextStyle(
               color: Colors.green, fontSize: 18, fontWeight: FontWeight.bold),
         ),
@@ -120,9 +120,8 @@ class ScreenAccount extends StatelessWidget {
                   );
                 },
                 child: AccountBoxesWidget(
-                  ico: Icons.view_list_outlined,
-                  title: 'Orders',
-                ),
+                    ico: Icons.view_list_outlined,
+                    title: AppLocalizations.of(context)!.orders),
               ),
               GestureDetector(
                 onTap: () => Navigator.push(
@@ -132,9 +131,8 @@ class ScreenAccount extends StatelessWidget {
                   ),
                 ),
                 child: AccountBoxesWidget(
-                  ico: Icons.favorite_border,
-                  title: 'Wishlist',
-                ),
+                    ico: Icons.favorite_border,
+                    title: AppLocalizations.of(context)!.wishlist),
               ),
               // AccountBoxesWidget(
               //   ico: Icons.card_giftcard,
@@ -157,10 +155,10 @@ class ScreenAccount extends StatelessWidget {
             padding: const EdgeInsets.only(left: 15.0),
             child: Column(
               children: [
-                const Align(
+                Align(
                     alignment: Alignment.topLeft,
                     child: Text(
-                      'Account Settings',
+                      AppLocalizations.of(context)!.accountSettings,
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                     )),
@@ -177,9 +175,8 @@ class ScreenAccount extends StatelessWidget {
                     );
                   },
                   child: AccountSettingsWidgets(
-                    ico: Icons.person_outline,
-                    title: 'Edit Profile',
-                  ),
+                      ico: Icons.person_outline,
+                      title: AppLocalizations.of(context)!.editProfile),
                 ),
                 // GestureDetector(
                 //   onTap: () {
@@ -206,7 +203,7 @@ class ScreenAccount extends StatelessWidget {
                   },
                   child: AccountSettingsWidgets(
                     ico: Icons.location_on_outlined,
-                    title: 'Saved  Adresses',
+                    title: AppLocalizations.of(context)!.savedAddresses,
                   ),
                 ),
                 GestureDetector(

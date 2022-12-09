@@ -1,0 +1,21 @@
+{
+    "language":"മലയാളം",
+    "hello":"ഹലോ",
+    "savedAddresses":"സംരക്ഷിച്ച വിലാസങ്ങൾ",
+    "editProfile":"പ്രൊഫൈൽ എഡിറ്റ് ചെയ്യുക",
+    "wishlist":"ഇഷ്ടപ്പെട്ട ഇനം",
+    "orders":"ഓർഡറുകൾ",
+    "accountSettings":"അക്കൗണ്ട് ക്രമീകരണങ്ങൾ",
+    "myAccount":"എന്റെ അക്കൗണ്ട്",
+    "myCart":"എന്റെ കാർട്ട്",
+    "addToCart":"കാർട്ടിലേക്ക് ചേർക്കുക",
+    "remove":"നീക്കം ചെയ്യുക",
+    "buyThisNow":"ഇപ്പോൾ വാങ്ങുക",
+    "buyNow":"വാങ്ങുക",
+    "catogory":"വിഭാഗം",
+    "myAddresses":"എന്റെ വിലാസങ്ങൾ",
+    "addNewAddress":"പുതിയ വിലാസം ചേർക്കുക",
+    "freeGif":"പുതിയ അറിയിപ്പില്ല",
+    "notification":"അറിയിപ്പ്"
+
+}

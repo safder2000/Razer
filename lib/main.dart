@@ -106,7 +106,7 @@ class MyApp extends StatelessWidget {
             ),
           ),
           supportedLocales: L10n.all,
-          locale: Locale('en'),
+          locale: Locale('ml'),
           localizationsDelegates: [
             AppLocalizations.delegate,
             GlobalMaterialLocalizations.delegate,
