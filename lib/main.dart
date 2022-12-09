@@ -13,11 +13,14 @@ import 'package:razer/application/auth/auth_bloc.dart';
 
 import 'package:razer/application/buying/buying_bloc.dart';
 import 'package:razer/application/cart/cart_bloc.dart';
+import 'package:razer/application/language/language_bloc.dart';
 import 'package:razer/application/search/search_bloc.dart';
 import 'package:razer/application/shop/shop_bloc.dart';
 import 'package:razer/l10n/l10n.dart';
 import 'package:razer/presentation/auth/auth_page.dart';
 import 'package:flutter_gen/gen_l10n/app-localizations.dart';
+
+import 'presentation/account/account_settings/select_language/locale_provider.dart';
 
 // const AndroidNotificationChannel channel = AndroidNotificationChannel(
 //     'high_importance_channel', // id
@@ -83,28 +86,35 @@ class MyApp extends StatelessWidget {
         BlocProvider<SearchBloc>(
           create: (BuildContext context) => SearchBloc(),
         ),
-      ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'razer',
-        theme: ThemeData(
-          primarySwatch: Colors.green,
-          scaffoldBackgroundColor: Colors.black,
-          fontFamily: GoogleFonts.montserrat().fontFamily,
-          backgroundColor: Colors.black,
-          textTheme: const TextTheme(
-            bodyText1: TextStyle(color: Colors.white),
-            bodyText2: TextStyle(color: Colors.white),
-          ),
+        BlocProvider<LanguageBloc>(
+          create: (BuildContext context) => LanguageBloc(),
         ),
-        supportedLocales: L10n.all,
-        localizationsDelegates: [
-          AppLocalizations.delegate,
-          GlobalMaterialLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate
-        ],
-        home: ScreenLogin(),
+      ],
+      child: BlocProvider(
+        create: (context) => LanguageBloc(),
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'razer',
+          theme: ThemeData(
+            primarySwatch: Colors.green,
+            scaffoldBackgroundColor: Colors.black,
+            fontFamily: GoogleFonts.montserrat().fontFamily,
+            backgroundColor: Colors.black,
+            textTheme: const TextTheme(
+              bodyText1: TextStyle(color: Colors.white),
+              bodyText2: TextStyle(color: Colors.white),
+            ),
+          ),
+          supportedLocales: L10n.all,
+          locale: Locale('en'),
+          localizationsDelegates: [
+            AppLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate
+          ],
+          home: ScreenLogin(),
+        ),
       ),
     );
   }

@@ -7,12 +7,14 @@ import 'package:razer/core/colors.dart';
 
 import 'package:razer/core/constents.dart';
 import 'package:razer/functions/user_profile_functions.dart';
+import 'package:razer/main.dart';
 import 'package:razer/model/user_profile_model.dart';
 import 'package:razer/presentation/account/Orders/screen_orders.dart';
 import 'package:razer/presentation/account/account_settings/edit_profille/screen_edit_profle.dart';
 import 'package:razer/presentation/account/account_settings/notification_settings/screen_notifications.dart';
 import 'package:razer/presentation/account/account_settings/save_card_n_wallet/cardsNwallet.dart';
 import 'package:razer/presentation/account/account_settings/saved_address/screen_saved_address.dart';
+import 'package:razer/presentation/account/account_settings/select_language/language_selector.dart';
 import 'package:razer/presentation/account/widgets/account_boxes_widget.dart';
 import 'package:razer/presentation/account/widgets/account_settings_widgets.dart';
 import 'package:razer/presentation/account/wishlist/screen_wishlist.dart';
@@ -24,6 +26,7 @@ class ScreenAccount extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {});
     final email = FirebaseAuth.instance.currentUser!.email;
     log('${email}');
     return Scaffold(
@@ -283,12 +286,13 @@ class ScreenAccount extends StatelessWidget {
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
+          LanguagePickerWidget(),
           languageTile(lang: 'English', isSelected: true),
           height_10,
           languageTile(lang: 'Malayalam'),
           height_10,
           GestureDetector(
-              // onTap: () => ScreenAccount.of(context).setLocale(Locale.fromSubtags(languageCode: 'hi')),
+              // onTap: () => MyApp.of(context).setLocale(Locale.fromSubtags(languageCode: 'hi')),
               child: languageTile(lang: 'Hindi')),
         ],
       ),
