@@ -10,6 +10,7 @@ import 'package:razer/model/product_model.dart';
 import 'package:razer/presentation/shop/order_summery/widgets/items.dart';
 import 'package:razer/presentation/shop/order_summery/widgets/price_details.dart';
 import 'package:razer/presentation/shop/payment/screen_payment.dart';
+import 'package:razer/presentation/shop/screen_buy_item.dart';
 
 import 'widgets/deliver_to.dart';
 
@@ -102,9 +103,11 @@ class ScreenOederSummery extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute<void>(
-                            builder: (BuildContext context) => ScreenPayment(
-                              product: product,
-                            ),
+                            builder: (BuildContext context) =>
+                                ScreenBuyItem(product: product),
+                            // ScreenPayment(
+                            //   product: product,
+                            // ),
                           ),
                         );
                       },

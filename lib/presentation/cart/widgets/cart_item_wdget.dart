@@ -6,6 +6,7 @@ import 'package:razer/model/product_model.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:razer/presentation/shop/order_summery/screen_order_summary.dart';
 import 'package:flutter_gen/gen_l10n/app-localizations.dart';
+import 'package:razer/presentation/shop/screen_buy_item.dart';
 import '../../../application/cart/cart_bloc.dart';
 
 class CartItemWidget extends StatelessWidget {
@@ -130,6 +131,7 @@ class CartItemWidget extends StatelessWidget {
                       MaterialPageRoute<void>(
                         builder: (BuildContext context) =>
                             ScreenOederSummery(product: product),
+                        // ScreenBuyItem(product: product),
                       ),
                     );
                   },

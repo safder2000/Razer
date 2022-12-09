@@ -90,31 +90,32 @@ class MyApp extends StatelessWidget {
           create: (BuildContext context) => LanguageBloc(),
         ),
       ],
-      child: BlocProvider(
-        create: (context) => LanguageBloc(),
-        child: MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: 'razer',
-          theme: ThemeData(
-            primarySwatch: Colors.green,
-            scaffoldBackgroundColor: Colors.black,
-            fontFamily: GoogleFonts.montserrat().fontFamily,
-            backgroundColor: Colors.black,
-            textTheme: const TextTheme(
-              bodyText1: TextStyle(color: Colors.white),
-              bodyText2: TextStyle(color: Colors.white),
+      child: BlocBuilder<LanguageBloc, LanguageState>(
+        builder: (context, state) {
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: 'razer',
+            theme: ThemeData(
+              primarySwatch: Colors.green,
+              scaffoldBackgroundColor: Colors.black,
+              fontFamily: GoogleFonts.montserrat().fontFamily,
+              backgroundColor: Colors.black,
+              textTheme: const TextTheme(
+                bodyText1: TextStyle(color: Colors.white),
+                bodyText2: TextStyle(color: Colors.white),
+              ),
             ),
-          ),
-          supportedLocales: L10n.all,
-          locale: Locale('ml'),
-          localizationsDelegates: [
-            AppLocalizations.delegate,
-            GlobalMaterialLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate
-          ],
-          home: ScreenLogin(),
-        ),
+            supportedLocales: L10n.all,
+            locale: state.locale,
+            localizationsDelegates: [
+              AppLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate
+            ],
+            home: ScreenLogin(),
+          );
+        },
       ),
     );
   }

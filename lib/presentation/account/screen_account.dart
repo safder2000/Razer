@@ -3,6 +3,8 @@ import 'dart:developer';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:razer/application/language/language_bloc.dart';
 import 'package:razer/core/colors.dart';
 
 import 'package:razer/core/constents.dart';
@@ -284,13 +286,44 @@ class ScreenAccount extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           LanguagePickerWidget(),
-          languageTile(lang: 'English', isSelected: true),
-          height_10,
-          languageTile(lang: 'Malayalam'),
+          GestureDetector(
+            onTap: () {
+              BlocProvider.of<LanguageBloc>(context)
+                  .add(ChangeLang(newLocale: Locale('en')));
+              Navigator.pop(context);
+            },
+            child: languageTile(
+              lang: 'English',
+              isSelected: BlocProvider.of<LanguageBloc>(context).state.locale ==
+                  Locale('en'),
+            ),
+          ),
           height_10,
           GestureDetector(
-              // onTap: () => MyApp.of(context).setLocale(Locale.fromSubtags(languageCode: 'hi')),
-              child: languageTile(lang: 'Hindi')),
+              onTap: () {
+                BlocProvider.of<LanguageBloc>(context)
+                    .add(ChangeLang(newLocale: Locale('ml')));
+                Navigator.pop(context);
+              },
+              child: languageTile(
+                lang: 'Malayalam',
+                isSelected:
+                    BlocProvider.of<LanguageBloc>(context).state.locale ==
+                        Locale('ml'),
+              )),
+          height_10,
+          GestureDetector(
+              onTap: () {
+                BlocProvider.of<LanguageBloc>(context)
+                    .add(ChangeLang(newLocale: Locale('hi')));
+                Navigator.pop(context);
+              },
+              child: languageTile(
+                lang: 'Hindi',
+                isSelected:
+                    BlocProvider.of<LanguageBloc>(context).state.locale ==
+                        Locale('hi'),
+              )),
         ],
       ),
       actions: [

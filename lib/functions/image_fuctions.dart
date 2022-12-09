@@ -20,7 +20,8 @@ class ImageFunctions {
   static Future<String?> getImage() async {
     final xfile = await ImageFunctions.selectImage();
     if (xfile != null) {
-      String imgUrl = await ImageFunctions.uploadImage(xfile);
+      log('got image from local storage');
+      String? imgUrl = await ImageFunctions.uploadImage(xfile);
       return imgUrl;
     } else {
       return null;
@@ -35,15 +36,25 @@ class ImageFunctions {
     return xfile;
   }
 
-  static Future<String> uploadImage(XFile xfile) async {
+  static Future<String?> uploadImage(XFile xfile) async {
     final path = 'images/${xfile.name}';
     final file = File(xfile.path);
-
+    final imageUrl = null;
     final ref = FirebaseStorage.instance.ref().child(path);
+    log('firebase storage instance created');
     final uploadTask = ref.putFile(file);
     log('image ${xfile.name} uploaded to fire storage');
-    final snapshot = await uploadTask.whenComplete(() {});
-    final imageUrl = await snapshot.ref.getDownloadURL();
+    try {
+      final snapshot = await uploadTask.whenComplete(() {});
+      final imageUrl = await snapshot.ref.getDownloadURL();
+    } on Exception catch (e) {
+      log('exeption occuored $e');
+    }
+
+    log('image ${xfile.name} image uploaded');
+
+    log('image ${xfile.name} got link   (${imageUrl})');
+
     return imageUrl;
   }
 }
