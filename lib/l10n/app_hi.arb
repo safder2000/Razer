@@ -1,5 +1,21 @@
 {
     "language":"हिन्दी",
     "hello":"नमस्ते",
-    "savedAddresses":"सहेजे गए पते"
+    "savedAddresses":"सहेजे गए पते",
+    "editProfile":"प्रोफ़ाइल संपादित करें",
+    "wishlist":"इच्छा-सूची",
+    "orders":"आदेश",
+    "accountSettings":"अकाउंट सेटिंग",
+    "myAccount":"मेरा खाता",
+    "myCart":"मेरी गाड़ी",
+    "addToCart":"कार्ट में जोड़ें",
+    "remove":"हटाना",
+    "buyThisNow":"इसके द्वारा अब",
+    "buyNow":"अभी खरीदें",
+    "catogory":"श्रेणी",
+    "myAddresses":"मेरे पते",
+    "addNewAddress":"नया पता जोड़ें",
+    "freeGif":"यह एकमात्र एनिमेटेड फ्री जिफ़ है जो मुझे मिला है",
+    "notification":"अधिसूचना"
+
 }

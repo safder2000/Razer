@@ -6,6 +6,7 @@ import 'package:razer/functions/cart_fn.dart';
 import 'package:razer/model/product_model.dart';
 
 import 'package:razer/presentation/cart/widgets/cart_item_wdget.dart';
+import 'package:flutter_gen/gen_l10n/app-localizations.dart';
 
 class ScreenCart extends StatelessWidget {
   const ScreenCart({super.key});
@@ -14,8 +15,8 @@ class ScreenCart extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'My Cart',
+        title: Text(
+          AppLocalizations.of(context)!.myCart,
           style: TextStyle(color: justgreen, fontWeight: FontWeight.bold),
         ),
         backgroundColor: Colors.black,

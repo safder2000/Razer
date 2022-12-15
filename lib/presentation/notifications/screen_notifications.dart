@@ -6,6 +6,7 @@ import 'package:razer/functions/notifications/notification_functions.dart';
 import 'package:razer/model/notification.dart';
 import 'package:razer/presentation/notifications/widgets/notification_tile_widget.dart';
 import 'package:razer/presentation/widgets/appbar_widget.dart';
+import 'package:flutter_gen/gen_l10n/app-localizations.dart';
 
 class ScreenNotifications extends StatelessWidget {
   const ScreenNotifications({super.key});
@@ -15,7 +16,7 @@ class ScreenNotifications extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Notifications',
+          AppLocalizations.of(context)!.notification,
           style: TextStyle(color: justgreen, fontWeight: FontWeight.bold),
         ),
         backgroundColor: justBlack,
@@ -47,7 +48,7 @@ class ScreenNotifications extends StatelessWidget {
                       Lottie.network(
                           'https://assets8.lottiefiles.com/packages/lf20_3EMIt2.json'),
                       height_20,
-                      Text('This is the only animated free gif i got .. \n'),
+                      Text(AppLocalizations.of(context)!.freeGif),
                     ],
                   ),
                 ),

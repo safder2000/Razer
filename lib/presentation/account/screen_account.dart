@@ -3,16 +3,20 @@ import 'dart:developer';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:razer/application/language/language_bloc.dart';
 import 'package:razer/core/colors.dart';
 
 import 'package:razer/core/constents.dart';
 import 'package:razer/functions/user_profile_functions.dart';
+import 'package:razer/main.dart';
 import 'package:razer/model/user_profile_model.dart';
 import 'package:razer/presentation/account/Orders/screen_orders.dart';
 import 'package:razer/presentation/account/account_settings/edit_profille/screen_edit_profle.dart';
 import 'package:razer/presentation/account/account_settings/notification_settings/screen_notifications.dart';
 import 'package:razer/presentation/account/account_settings/save_card_n_wallet/cardsNwallet.dart';
 import 'package:razer/presentation/account/account_settings/saved_address/screen_saved_address.dart';
+import 'package:razer/presentation/account/account_settings/select_language/language_selector.dart';
 import 'package:razer/presentation/account/widgets/account_boxes_widget.dart';
 import 'package:razer/presentation/account/widgets/account_settings_widgets.dart';
 import 'package:razer/presentation/account/wishlist/screen_wishlist.dart';
@@ -24,13 +28,14 @@ class ScreenAccount extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {});
     final email = FirebaseAuth.instance.currentUser!.email;
     log('${email}');
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
         title: Text(
-          'My Account',
+          AppLocalizations.of(context)!.myAccount,
           style: TextStyle(
               color: Colors.green, fontSize: 18, fontWeight: FontWeight.bold),
         ),
@@ -117,9 +122,8 @@ class ScreenAccount extends StatelessWidget {
                   );
                 },
                 child: AccountBoxesWidget(
-                  ico: Icons.view_list_outlined,
-                  title: 'Orders',
-                ),
+                    ico: Icons.view_list_outlined,
+                    title: AppLocalizations.of(context)!.orders),
               ),
               GestureDetector(
                 onTap: () => Navigator.push(
@@ -129,9 +133,8 @@ class ScreenAccount extends StatelessWidget {
                   ),
                 ),
                 child: AccountBoxesWidget(
-                  ico: Icons.favorite_border,
-                  title: 'Wishlist',
-                ),
+                    ico: Icons.favorite_border,
+                    title: AppLocalizations.of(context)!.wishlist),
               ),
               // AccountBoxesWidget(
               //   ico: Icons.card_giftcard,
@@ -154,10 +157,10 @@ class ScreenAccount extends StatelessWidget {
             padding: const EdgeInsets.only(left: 15.0),
             child: Column(
               children: [
-                const Align(
+                Align(
                     alignment: Alignment.topLeft,
                     child: Text(
-                      'Account Settings',
+                      AppLocalizations.of(context)!.accountSettings,
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                     )),
@@ -174,9 +177,8 @@ class ScreenAccount extends StatelessWidget {
                     );
                   },
                   child: AccountSettingsWidgets(
-                    ico: Icons.person_outline,
-                    title: 'Edit Profile',
-                  ),
+                      ico: Icons.person_outline,
+                      title: AppLocalizations.of(context)!.editProfile),
                 ),
                 // GestureDetector(
                 //   onTap: () {
@@ -203,7 +205,7 @@ class ScreenAccount extends StatelessWidget {
                   },
                   child: AccountSettingsWidgets(
                     ico: Icons.location_on_outlined,
-                    title: 'Saved  Adresses',
+                    title: AppLocalizations.of(context)!.savedAddresses,
                   ),
                 ),
                 GestureDetector(
@@ -283,13 +285,45 @@ class ScreenAccount extends StatelessWidget {
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          languageTile(lang: 'English', isSelected: true),
-          height_10,
-          languageTile(lang: 'Malayalam'),
+          LanguagePickerWidget(),
+          GestureDetector(
+            onTap: () {
+              BlocProvider.of<LanguageBloc>(context)
+                  .add(ChangeLang(newLocale: Locale('en')));
+              Navigator.pop(context);
+            },
+            child: languageTile(
+              lang: 'English',
+              isSelected: BlocProvider.of<LanguageBloc>(context).state.locale ==
+                  Locale('en'),
+            ),
+          ),
           height_10,
           GestureDetector(
-              // onTap: () => ScreenAccount.of(context).setLocale(Locale.fromSubtags(languageCode: 'hi')),
-              child: languageTile(lang: 'Hindi')),
+              onTap: () {
+                BlocProvider.of<LanguageBloc>(context)
+                    .add(ChangeLang(newLocale: Locale('ml')));
+                Navigator.pop(context);
+              },
+              child: languageTile(
+                lang: 'Malayalam',
+                isSelected:
+                    BlocProvider.of<LanguageBloc>(context).state.locale ==
+                        Locale('ml'),
+              )),
+          height_10,
+          GestureDetector(
+              onTap: () {
+                BlocProvider.of<LanguageBloc>(context)
+                    .add(ChangeLang(newLocale: Locale('hi')));
+                Navigator.pop(context);
+              },
+              child: languageTile(
+                lang: 'Hindi',
+                isSelected:
+                    BlocProvider.of<LanguageBloc>(context).state.locale ==
+                        Locale('hi'),
+              )),
         ],
       ),
       actions: [

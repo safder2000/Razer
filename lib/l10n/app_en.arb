@@ -10,9 +10,23 @@
         "savedAddresses":"Saved Addresses",
     "@savedAddresses":{
         "description":"Saved Addresses"
-        }
-        
-        
-        
-        
+        },
+        "editProfile":"Edit Profile",
+    "@editProfile":{
+        "description":"Edit Profile"
+        },
+        "wishlist":"Wishlist",
+        "orders":"Orders",
+        "accountSettings":"Account Settings",
+        "myAccount":"My Account",
+        "myCart":"My Cart",
+        "addToCart":"Add To Cart",
+        "remove":"Remove",
+        "buyThisNow":"Buy This Now",
+        "buyNow":"Buy Buy Now",
+        "catogory":"Catogory",
+        "myAddresses":"My Addresses",
+        "freeGif":"This is the only animated free Gif I have",
+        "notification":"Notification"
+      
 }

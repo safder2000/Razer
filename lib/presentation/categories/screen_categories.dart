@@ -3,6 +3,7 @@ import 'package:razer/core/constents.dart';
 import 'package:razer/presentation/categories/widgets/catogory_tile_widgets.dart';
 import 'package:razer/presentation/shop/screen_shop.dart';
 import 'package:razer/presentation/widgets/appbar_widget.dart';
+import 'package:flutter_gen/gen_l10n/app-localizations.dart';
 
 class ScreenCategories extends StatelessWidget {
   const ScreenCategories({super.key});
@@ -13,7 +14,7 @@ class ScreenCategories extends StatelessWidget {
         body: Column(
       children: [
         AppBarWidget(
-          title: "Catogory",
+          title: AppLocalizations.of(context)!.catogory,
         ),
         height_10,
         height_10,

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:meta/meta.dart';
@@ -14,7 +16,10 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
     on<EditProfileEvent>((event, emit) {});
 
     on<ProfilePic>((event, emit) async {
+      // final imageUrl =
+      //     'https://w1.pngwing.com/pngs/743/500/png-transparent-circle-silhouette-logo-user-user-profile-green-facial-expression-nose-cartoon.png';
       final imageUrl = await ImageFunctions.getImage();
+      log(imageUrl.toString());
 
       // if (imageUrl != null) {}
 

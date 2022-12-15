@@ -4,6 +4,7 @@ import 'package:razer/core/constents.dart';
 import 'package:razer/functions/order_functions/order_functions.dart';
 import 'package:razer/model/order_product_model.dart';
 import 'package:razer/presentation/account/Orders/widgets/ordered_item_widgets.dart';
+import 'package:flutter_gen/gen_l10n/app-localizations.dart';
 
 class ScreenOrders extends StatelessWidget {
   const ScreenOrders({super.key});
@@ -14,7 +15,7 @@ class ScreenOrders extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.black,
         title: Text(
-          'Orders',
+          AppLocalizations.of(context)!.orders,
           style: TextStyle(color: justgreen),
         ),
       ),
