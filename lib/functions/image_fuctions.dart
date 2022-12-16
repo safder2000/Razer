@@ -39,22 +39,20 @@ class ImageFunctions {
   static Future<String?> uploadImage(XFile xfile) async {
     final path = 'images/${xfile.name}';
     final file = File(xfile.path);
-    final imageUrl = null;
+
     final ref = FirebaseStorage.instance.ref().child(path);
     log('firebase storage instance created');
     final uploadTask = ref.putFile(file);
     log('image ${xfile.name} uploaded to fire storage');
     try {
       final snapshot = await uploadTask.whenComplete(() {});
+      log('image ${xfile.name} image uploaded');
       final imageUrl = await snapshot.ref.getDownloadURL();
+      log('image ${xfile.name}  link   (${imageUrl})');
+      return imageUrl;
     } on Exception catch (e) {
       log('exeption occuored $e');
+      return null;
     }
-
-    log('image ${xfile.name} image uploaded');
-
-    log('image ${xfile.name} got link   (${imageUrl})');
-
-    return imageUrl;
   }
 }
