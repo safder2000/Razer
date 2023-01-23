@@ -10,11 +10,16 @@ class ShopItemWidget extends StatelessWidget {
     this.isUnavailable = false,
     Key? key,
   }) : super(key: key);
+
   bool isOffer;
   bool isUnavailable;
   Product product;
   @override
   Widget build(BuildContext context) {
+    String nullImage = 'https://demofree.sirv.com/nope-not-here.jpg';
+    if (product.images[0] != '' && product.images[0] != null) {
+      nullImage = product.images[0];
+    }
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 4),
       child: Column(
@@ -67,7 +72,7 @@ class ShopItemWidget extends StatelessWidget {
                   color: const Color.fromARGB(22, 167, 167, 167),
                   image: DecorationImage(
                     fit: BoxFit.cover,
-                    image: NetworkImage("${product.images[0]}"),
+                    image: NetworkImage("${product.images[0] ?? nullImage}"),
                     // AssetImage('lib/assets/catogory_pc.png')
                   ),
                 ),

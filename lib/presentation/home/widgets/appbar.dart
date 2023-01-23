@@ -40,19 +40,6 @@ class HomeAppBarWidget extends StatelessWidget {
                   color: razergreen,
                   size: 28,
                 )),
-            IconButton(
-                onPressed: () {
-                  NotificationApi.showNotification(
-                      // title: 'msg title',
-                      // body: 'msg body',
-                      // payload: 'gg',
-                      );
-                },
-                icon: const Icon(
-                  Icons.search,
-                  color: razergreen,
-                  size: 28,
-                ))
           ],
         ),
         Divider(

@@ -71,12 +71,12 @@ class ListedItem extends StatelessWidget {
                                 overflow: TextOverflow.clip,
                               ),
                               Spacer(),
-                              Text(
-                                'ID : ${product.id}',
-                                style: TextStyle(
-                                    fontSize: 10, color: Colors.white60),
-                                overflow: TextOverflow.clip,
-                              ),
+                              // Text(
+                              //   'ID : ${product.id}',
+                              //   style: TextStyle(
+                              //       fontSize: 10, color: Colors.white60),
+                              //   overflow: TextOverflow.clip,
+                              // ),
                             ],
                           ),
                         ),

@@ -92,11 +92,11 @@ class _ScreenBuyItemState extends State<ScreenBuyItem> {
                 Navigator.push(
                   context,
                   MaterialPageRoute<void>(
-                    builder: (BuildContext context) => ScreenCart(),
+                    builder: (BuildContext context) => const ScreenCart(),
                   ),
                 );
               },
-              icon: Icon(
+              icon: const Icon(
                 Icons.shopping_cart_outlined,
                 size: 27,
               ))
@@ -108,7 +108,7 @@ class _ScreenBuyItemState extends State<ScreenBuyItem> {
         children: [
           height_20,
           Container(
-            color: Color.fromARGB(19, 255, 255, 255),
+            color: const Color.fromARGB(19, 255, 255, 255),
             height: 250,
             child: CarouselSlider(
               options: CarouselOptions(height: 400.0),
@@ -126,7 +126,7 @@ class _ScreenBuyItemState extends State<ScreenBuyItem> {
                     widget.product.images.length,
                   ),
                   separatorBuilder: (BuildContext context, int index) =>
-                      SizedBox(
+                      const SizedBox(
                     width: 10,
                   ),
                 );
@@ -145,7 +145,8 @@ class _ScreenBuyItemState extends State<ScreenBuyItem> {
                   child: Text(
                     widget.product.name,
                     overflow: TextOverflow.clip,
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                        fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                 ),
                 StreamBuilder<List<Product>>(
@@ -163,7 +164,7 @@ class _ScreenBuyItemState extends State<ScreenBuyItem> {
                                 onPressed: () {
                                   removeFromWishlist(id: widget.product.id);
                                 },
-                                icon: Icon(
+                                icon: const Icon(
                                   Icons.favorite,
                                   color: Colors.red,
                                 ));
@@ -172,7 +173,7 @@ class _ScreenBuyItemState extends State<ScreenBuyItem> {
                                 onPressed: () {
                                   addToWishlist(product: widget.product);
                                 },
-                                icon: Icon(
+                                icon: const Icon(
                                   Icons.favorite,
                                   color: Colors.white,
                                 ));
@@ -182,7 +183,7 @@ class _ScreenBuyItemState extends State<ScreenBuyItem> {
                               onPressed: () {
                                 addToWishlist(product: widget.product);
                               },
-                              icon: Icon(
+                              icon: const Icon(
                                 Icons.favorite,
                                 color: Colors.white,
                               ));
@@ -192,7 +193,7 @@ class _ScreenBuyItemState extends State<ScreenBuyItem> {
                             onPressed: () {
                               addToWishlist(product: widget.product);
                             },
-                            icon: Icon(
+                            icon: const Icon(
                               Icons.favorite,
                               color: Colors.white,
                             ));
@@ -210,7 +211,7 @@ class _ScreenBuyItemState extends State<ScreenBuyItem> {
               child: Text(
                 widget.product.description,
                 overflow: TextOverflow.clip,
-                style: TextStyle(fontSize: 14, color: Colors.white70),
+                style: const TextStyle(fontSize: 14, color: Colors.white70),
               ),
             ),
           ),
@@ -222,14 +223,14 @@ class _ScreenBuyItemState extends State<ScreenBuyItem> {
             child: Center(
               child: Text(
                 'US  \$${widget.product.price}',
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: 17,
                     fontWeight: FontWeight.bold,
                     color: razergreen),
               ),
             ),
           ),
-          Spacer(),
+          const Spacer(),
           Row(
             children: [
               Expanded(
@@ -241,7 +242,7 @@ class _ScreenBuyItemState extends State<ScreenBuyItem> {
                   child: Container(
                     height: 60,
                     color: Colors.white,
-                    child: Center(
+                    child: const Center(
                       child: Text(
                         'Add To Cart',
                         style: TextStyle(
@@ -278,7 +279,7 @@ class _ScreenBuyItemState extends State<ScreenBuyItem> {
                         child: Container(
                           height: 60,
                           color: theAmber,
-                          child: Center(
+                          child: const Center(
                             child: Text(
                               'Buy Now',
                               style: TextStyle(
@@ -307,7 +308,7 @@ class _ScreenBuyItemState extends State<ScreenBuyItem> {
         width: srcWidth,
         height: srcWidth * 0.7,
         decoration: BoxDecoration(
-          color: Color.fromARGB(255, 0, 0, 0),
+          color: const Color.fromARGB(255, 0, 0, 0),
           image: DecorationImage(
             image: NetworkImage(imgUrl),
           ),

@@ -5,11 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:razer/presentation/home/widgets/appbar.dart';
 import 'package:razer/presentation/home/widgets/home_tiles_widgets.dart';
 
+import '../../functions/check_permission/location_permission.dart';
+
 class ScreenHome extends StatelessWidget {
   const ScreenHome({super.key});
 
   @override
   Widget build(BuildContext context) {
+    requestPermission(context);
     return Scaffold(
       body: Column(
         children: [
